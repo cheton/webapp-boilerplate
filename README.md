@@ -1,7 +1,5 @@
 ![](//raw.github.com/cheton/webapp-boilerplate/master/web/images/logo.png)
 
-## Overview 
-
 The WebApp Boilerplate is a frontend/backend JavaScript stack which is comprised of HTML/JavaScript/CSS tools and frameworks for building web applications. You can initialize and create a new project using the scaffold.
 
 ## Installation
