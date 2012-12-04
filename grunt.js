@@ -64,7 +64,8 @@ module.exports = function(grunt) {
         },
         clean: {
             prod: [
-                'build/**'
+                'build/.tmp',
+                'build/*'
             ]
         },
         copy: {
@@ -90,23 +91,21 @@ module.exports = function(grunt) {
             },
             runDev: {
                 execOptions: {
-                    cwd: 'app',
                     env: {
                         'NODE_ENV' : 'development',
                         'PORT': 8000
                     }
                 },
-                command: 'node app.js'
+                command: 'cd app; node app.js'
             },
             runProd: {
                 execOptions: {
-                    cwd: 'build/<%= pkg.name%>-<%= pkg.version %>/app',
                     env: {
                         'NODE_ENV' : 'production',
                         'PORT': 8000
                     }
                 },
-                command: 'node app.js'
+                command: 'cd build/<%= pkg.name%>-<%= pkg.version %>/app; node app.js'
             }
         },
         requirejs: {

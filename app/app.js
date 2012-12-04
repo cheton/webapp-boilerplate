@@ -1,8 +1,7 @@
 // Module dependencies
 var express = require('express'),
     http = require('http'),
-    util = require('util'),
-    director = require('director');
+    util = require('util');
 
 // String utils
 require('colors');
