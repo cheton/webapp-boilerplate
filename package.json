@@ -1,7 +1,13 @@
 {
-    "name": "webapp",
+    "name": "webapp-boilerplate",
     "version": "0.0.1",
-    "description": "A web application template that is built based on the RequireJS framework",
+    "description": "WebApp Boilerplate",
+    "private": true,
+    "author": "Cheton Wu <cheton@gmail.com>",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/cheton/webapp-boilerplate.git"
+    },
     "engines": {
         "node": "~0.8",
         "npm": "~1.1"
@@ -27,12 +33,6 @@
         "grunt-requirejs": "latest",
         "grunt-shell": "latest"
     },
-    "licenses": [
-        {
-            "name": "MIT",
-            "url": "MIT-LICENSE.txt"
-        }
-    ],
     "scripts": {
         "build": "grunt",
         "test": "grunt test"
