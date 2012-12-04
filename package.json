@@ -1,0 +1,40 @@
+{
+    "name": "webapp",
+    "version": "0.0.1",
+    "description": "A web application template that is built based on the RequireJS framework",
+    "engines": {
+        "node": "~0.8",
+        "npm": "~1.1"
+    },
+    "dependencies": {
+        "express": "3.x",
+        "connect-assets": "2.x",
+        "colors": "0.x",
+        "cookies": "latest",
+        "string-format": "~0.2.0",
+        "consolidate": "~0.5",
+        "winston": "~0.6",
+        "hogan.js": "~2.0",
+        "sprintf": "~0.1",
+        "i18next": "~1.5"
+    },
+    "devDependencies": {
+        "grunt": "latest",
+        "grunt-contrib-coffee": "latest",
+        "grunt-contrib-compress": "latest",
+        "grunt-contrib-copy": "latest",
+        "requirejs": "latest",
+        "grunt-requirejs": "latest",
+        "grunt-shell": "latest"
+    },
+    "licenses": [
+        {
+            "name": "MIT",
+            "url": "MIT-LICENSE.txt"
+        }
+    ],
+    "scripts": {
+        "build": "grunt",
+        "test": "grunt test"
+    }
+}

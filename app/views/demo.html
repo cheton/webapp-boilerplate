@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html dir="{{dir}}" lang="{{lang}}">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title></title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width">
+<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+<link rel="stylesheet" href="libraries/normalize/1.0.2/normalize.css">
+<link rel="stylesheet" href="libraries/bootstrap/2.1.1/css/bootstrap.css">
+<link rel="stylesheet" href="styles/main.css">
+<script src="libraries/modernizr/2.6.2/modernizr-2.6.2.js"></script>
+<style type="text/css">
+.logo {
+    float: left;
+}
+.logo img {
+    margin: 10px;
+}
+.rtl .logo {
+    float: right;
+}
+.setLng {
+    float: right;
+    height: 80px;
+    position: relative;
+    margin-right: 20px;
+}
+.rtl .setLng {
+    float: left;
+    margin-left: 20px;
+}
+.setLng select#setLng {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    right: 0;
+    left: auto;
+}
+.rtl .setLng select#setLng {
+    right: auto;
+    left: 0;
+}
+.sidebar-content {
+    position: absolute;
+    width: 240px;
+    left: 0;
+    right: auto;
+}
+.rtl .sidebar-content {
+    left: auto;
+    right: 0;
+}
+.body-content {
+    position: absolute;
+    left: 240px;
+    top: 80px;
+    right: 0;
+    bottom: 0;
+    border: 1px solid #CCC;
+}
+.rtl .body-content {
+    left: 0;
+    right: 240px;
+}
+</style>
+</head>
+<body data-route="demo" style="background-color:#1B1B1B;" class="{{dir}}">
+<div style="background:#333;" class="row-fluid">
+    <div class="logo">
+        <img src="images/logo.png" />
+    </div>
+    <div class="setLng">
+        <select id="setLng">
+            <option value="en">en</option>
+            <option value="zh-TW">zh-TW</option>
+            <option value="ar">ar</option>
+        </select>
+    </div>
+</div>
+<div class="container-fluid" style="padding-left:0;padding-right:0;">
+    <div class="row-fluid">
+        <!-- Sidebar content -->
+        <div style="sidebar-content">
+            <ul class="nav nav-list" id="sidebar" style="background-color:#FFF;border:1px solid #CCC;">
+                <li><a href="#/basic"><i class="icon-chevron-right"></i><span data-i18n="basic"></span></a></li>
+                <li><a href="#/advanced"><i class="icon-chevron-right"></i><span data-i18n="advanced"></span></a></li>
+                <li><a href="#/table"><i class="icon-chevron-right"></i><span data-i18n="table"></span></a></li>
+            </ul>
+        </div>
+        <!-- Body content -->
+        <div class="body-content">
+            <iframe src="about:blank" id="body-content" style="border:0;width:100%;height:100%;display:block;"></iframe>
+        </div>
+    </div>
+</div>
+<noscript></noscript>
+<script type="text/javascript" src="scripts/plugins.js"></script>
+<script type="text/javascript" data-main="scripts/main" src="libraries/requirejs/require.js"></script>
+</body>
+</html>

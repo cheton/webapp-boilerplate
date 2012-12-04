@@ -1,0 +1,56 @@
+<!doctype html>
+
+<meta charset="utf-8" />
+
+<title>autoResize demo</title>
+
+<style>
+	body {
+		width: 700px;
+		font-family: sans-serif;
+	}
+	h1 {
+		margin: 0;
+		padding: 10px 0 20px;
+	}
+	#t, #i, #e, #u {
+		font-family: inherit;
+		font-size: 1em;
+	}
+	#t { display: block; width: 100%; }
+</style>
+
+<h1>Textarea</h1>
+
+<textarea id="t"></textarea>
+
+<h1>Inputs</h1>
+
+<h2>Text</h2>
+
+<input id="i" />
+
+<h2>Email</h2>
+
+<input id="e" type="email">
+
+<h2>URL</h2>
+
+<input id="u" type="url">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+<script src="jquery.autoresize.js"></script>
+<script>
+
+$('textarea,input').autoResize({
+	onBeforeResize: function(){
+		console.log('Before');
+		$(this).css('background', 'red');
+	},
+	onAfterResize: function(){
+		console.log('After');
+		$(this).css('background', '');
+	}
+});
+
+</script>

@@ -1,0 +1,7 @@
+{
+    "engine-name": "Rendering engine",
+    "browser": "Browser",
+    "platform": "Platform(s)",
+    "engine-version": "Engine version",
+    "css-grade": "CSS grade"
+}
