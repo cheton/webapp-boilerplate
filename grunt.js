@@ -192,14 +192,56 @@ module.exports = function(grunt) {
                     //- "none": no minification will be done.
                     optimize: 'uglify',
 
+                    //Introduced in 2.1.2: If using "dir" for an output directory, normally the
+                    //optimize setting is used to optimize the build layers (the "modules"
+                    //section of the config) and any other JS file in the directory. However, if
+                    //the non-build layer JS files will not be loaded after a build, you can
+                    //skip the optimization of those files, to speed up builds. Set this value
+                    //to true if you want to skip optimizing those other non-build layer JS
+                    //files.
+                    skipDirOptimize: false,
+
+                    //Introduced in 2.1.2 and considered experimental.
+                    //If the minifier specified in the "optimize" option supports generating
+                    //source maps for the minfied code, then generate them. The source maps
+                    //generated only translate minified JS to non-minified JS, it does not do
+                    //anything magical for translating minfied JS to transpiled source code.
+                    //Currently only optimize: "uglify2" is supported when running in node or
+                    //rhino, and if running in rhino, "closure" with a closure compiler jar
+                    //build after r1592 (20111114 release).
+                    //The source files will show up in a browser developer tool that supports
+                    //source maps as ".js.src" files.
+                    generateSourceMaps: false,
+
+                    //Introduced in 2.1.1: If a full directory optimization ("dir" is used), and
+                    //optimize is not "none", and skipDirOptimize is false, then normally all JS
+                    //files in the directory will be minified, and this value is automatically
+                    //set to "all". For JS files to properly work after a minification, the
+                    //optimizer will parse for define() calls and insert any dependency arrays
+                    //that are missing. However, this can be a bit slow if there are many/larger
+                    //JS files. So this transport normalization is not done (automatically set
+                    //to "skip") if optimize is set to "none". Cases where you may want to
+                    //manually set this value:
+                    //1) Optimizing later: if you plan on minifying the non-build layer JS files
+                    //after the optimizer runs (so not as part of running the optimizer), then
+                    //you should explicitly this value to "all".
+                    //2) Optimizing, but not dynamically loading later: you want to do a full
+                    //project optimization, but do not plan on dynamically loading non-build
+                    //layer JS files later. In this case, the normalization just slows down
+                    //builds, so you can explicitly set this value to "skip".
+                    //Finally, all build layers (specified in the "modules" or "out" setting)
+                    //automatically get normalization, so this setting does not apply to those
+                    //files.
+                    normalizeDirDefines: "skip",
+
                     //If using UglifyJS for script optimization, these config options can be
                     //used to pass configuration values to UglifyJS.
                     //See https://github.com/mishoo/UglifyJS for the possible values.
                     uglify: {
                         toplevel: true,
-                        ascii_only: true,
-                        beautify: true,
-                        max_line_length: 1000,
+                        //ascii_only: true,
+                        //beautify: true, // pass true if you want indented output
+                        //max_line_length: 1000,
 
                         //How to pass uglifyjs defined symbols for AST symbol replacement,
                         //see "defines" options for ast_mangle in the uglifys docs.
@@ -212,6 +254,11 @@ module.exports = function(grunt) {
                         //Skip the processor.ast_mangle() part of the uglify call (r.js 2.0.5+)
                         no_mangle: true
                     },
+
+                    //If using UglifyJS for script optimization, these config options can be
+                    //used to pass configuration values to UglifyJS.
+                    //See https://github.com/mishoo/UglifyJS2 for possible values.
+                    uglify2: {},
 
                     //If using Closure Compiler for script optimization, these config options
                     //can be used to configure Closure Compiler. See the documentation for
@@ -411,6 +458,16 @@ module.exports = function(grunt) {
                         //Always return a value.
                         return contents;
                     },
+
+                    //Introduced in 2.1.3: Seed raw text contents for the listed module IDs.
+                    //These text contents will be used instead of doing a file IO call for
+                    //those modules. Useful is some module ID contents are dynamically
+                    //based on user input, which is common in web build tools.
+                    /*
+                    rawText: {
+                        'some/id': 'define(["another/id"], function () {});'
+                    },
+                    */
 
                     //Introduced in 2.0.2: if set to true, then the optimizer will add a
                     //define(require, exports, module) {}); wrapper around any file that seems
