@@ -22,11 +22,12 @@ The WebApp Boilerplate is a frontend/backend JavaScript stack which is comprised
 
         $ curl http://npmjs.org/install.sh | sh
 
-4. Install [Grunt](http://gruntjs.com/) using NPM
+4. Install [Grunt](http://gruntjs.com/) and [PhantomJS](http://phantomjs.org/) using NPM
 
     It will drop modules in {prefix}/lib/node_modules, and puts executables files in {prefix}/bin, where {prefix} is usually something like /usr or /usr/local.
 
         $ npm install -g grunt
+        $ npm install -g phantomjs
 
 5. Install Node modules using NPM
 
