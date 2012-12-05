@@ -1,5 +1,11 @@
 // Module dependencies
-var winston = require('winston');
+var cluster = require('cluster'),
+    winston = require('winston'),
+    util = require('util');
+
+// String utils
+require('colors');
+require('string-format');
 
 // Default settings
 var defaultSettings = {
@@ -28,6 +34,14 @@ var logger;
 
 module.exports = {
     init: function(settings) {
+        if (cluster.isMaster) {
+            settings.transports.File.filename = util.format(settings.transports.File.filename, 'master:0');
+            settings.exceptionHandlers.File.filename = util.format(settings.exceptionHandlers.File.filename, 'master:0');
+        } else if (cluster.isWorker) {
+            settings.transports.File.filename = util.format(settings.transports.File.filename, 'worker:' + cluster.worker.id);
+            settings.exceptionHandlers.File.filename = util.format(settings.exceptionHandlers.File.filename, 'worker:' + cluster.worker.id);
+        }
+
         logger = new (winston.Logger)(defaultSettings);
 
         if ( ! settings.transports) {
