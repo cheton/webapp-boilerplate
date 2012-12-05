@@ -35,33 +35,32 @@ The WebApp Boilerplate is a frontend/backend JavaScript stack which is comprised
 
 ## Features
 
-* [HTML5 Boilerplate](http://html5boilerplate.com/)
-  HTML5 Boilerplate helps you build fast, robust, and adaptable web apps or sites. Kick-start your project with the combined knowledge and effort of 100s of developers, all in one little package.
-* [Grunt](http://gruntjs.com/)
-  Grunt is a task-based command line build tool for JavaScript projects.
-* [RequireJS](http://requirejs.org/)
-  RequireJS is a JavaScript file and module loader.
-* [Express](http://expressjs.com/)
-  Express is a minimal and flexible node.js web application framework, providing a robust set of features for building single and multi-page, and hybrid web applications.
-* Multiple languages with [i18next](http://i18next.com/)
-  18next is a full-featured i18n javascript library for translating your webapplication.
-* Logging with [Winston](https://github.com/flatiron/winston)
-  A multi-transport async logging library for node.js.
-* URL routing with [Director](https://github.com/flatiron/director)
-  Director is a router. Routing is the process of determining what code to run when a URL is requested.
-* Unit testing framework integration using PhantomJS with QUnit.
-* Includes sample apps with jQuery, Underscore, Backbone and Twitter Bootstrap.
+*   [HTML5 Boilerplate](http://html5boilerplate.com/)
+    HTML5 Boilerplate helps you build fast, robust, and adaptable web apps or sites. Kick-start your project with the combined knowledge and effort of 100s of developers, all in one little package.
+*   [Grunt](http://gruntjs.com/)
+    Grunt is a task-based command line build tool for JavaScript projects.
+*   [RequireJS](http://requirejs.org/)
+    RequireJS is a JavaScript file and module loader.
+*   [Express](http://expressjs.com/)
+    Express is a minimal and flexible node.js web application framework, providing a robust set of features for building single and multi-page, and hybrid web applications.
+*   [i18next](http://i18next.com/)
+    18next is a full-featured i18n javascript library for translating your webapplication.
+*   Logging with [Winston](https://github.com/flatiron/winston).
+*   URL routing with [Director](https://github.com/flatiron/director).
+*   Multiple processes in Node.js and sharing ports.
+*   Unit testing framework integration using PhantomJS with QUnit.
+*   Includes sample apps with jQuery, Underscore, Backbone and Twitter Bootstrap.
 
 ## Quick start
 
 Creating a development build with Grunt.
 
 ``` bash
-    $ grunt build:dev run:dev
+$ grunt build:dev run:dev
 ```
 
 Creating a production build with Grunt.
 
 ``` bash
-    $ grunt build:prod run:prod
+$ grunt build:prod run:prod
 ```
