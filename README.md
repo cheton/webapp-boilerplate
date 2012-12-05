@@ -2,6 +2,19 @@
 
 The WebApp Boilerplate is a frontend/backend JavaScript stack which is comprised of HTML/JavaScript/CSS tools and frameworks for building web applications. You can initialize and create a new project using the scaffold.
 
+## Features
+
+*   [HTML5 Boilerplate](http://html5boilerplate.com/) helps you build fast, robust, and adaptable web apps or sites. Kick-start your project with the combined knowledge and effort of 100s of developers, all in one little package.
+*   [Grunt](http://gruntjs.com/) is a task-based command line build tool for JavaScript projects.
+*   [RequireJS](http://requirejs.org/) is a JavaScript file and module loader.
+*   [Express](http://expressjs.com/) is a minimal and flexible node.js web application framework, providing a robust set of features for building single and multi-page, and hybrid web applications.
+*   [i18next](http://i18next.com/) is a full-featured i18n javascript library for translating your webapplication.
+*   Logging with [Winston](https://github.com/flatiron/winston).
+*   URL routing with [Director](https://github.com/flatiron/director).
+*   Running multiple Node.js processes and sharing ports.
+*   Unit testing framework integration using PhantomJS with QUnit.
+*   Includes sample apps with jQuery, Underscore, Backbone and Twitter Bootstrap.
+
 ## Installation
 
 1. Clone the git repo to your local computer
@@ -32,24 +45,6 @@ The WebApp Boilerplate is a frontend/backend JavaScript stack which is comprised
 5. Install Node modules using NPM
 
         $ npm install
-
-## Features
-
-*   [HTML5 Boilerplate](http://html5boilerplate.com/)
-    HTML5 Boilerplate helps you build fast, robust, and adaptable web apps or sites. Kick-start your project with the combined knowledge and effort of 100s of developers, all in one little package.
-*   [Grunt](http://gruntjs.com/)
-    Grunt is a task-based command line build tool for JavaScript projects.
-*   [RequireJS](http://requirejs.org/)
-    RequireJS is a JavaScript file and module loader.
-*   [Express](http://expressjs.com/)
-    Express is a minimal and flexible node.js web application framework, providing a robust set of features for building single and multi-page, and hybrid web applications.
-*   [i18next](http://i18next.com/)
-    18next is a full-featured i18n javascript library for translating your webapplication.
-*   Logging with [Winston](https://github.com/flatiron/winston).
-*   URL routing with [Director](https://github.com/flatiron/director).
-*   Multiple processes in Node.js and sharing ports.
-*   Unit testing framework integration using PhantomJS with QUnit.
-*   Includes sample apps with jQuery, Underscore, Backbone and Twitter Bootstrap.
 
 ## Quick start
 
