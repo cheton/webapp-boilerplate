@@ -96,7 +96,7 @@ module.exports = function(grunt) {
                         'PORT': 8000
                     }
                 },
-                command: 'cd app; node app.js'
+                command: 'cd app; supervisor app.js'
             },
             runProd: {
                 execOptions: {
