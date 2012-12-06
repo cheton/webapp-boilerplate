@@ -1,21 +1,20 @@
 // Module dependencies
 var path = require('path'),
-    util = require('util'),
     i18n = require('i18next'),
     settings = require('./config/settings')();
 
 module.exports = function(app) {
 
-    var log = app.locals.log;
+    var log = app.locals.logger;
 
     function changeUserLanguage(req, res) {
         var lng = req.params.__lng__;
         if (settings.supportedLngs.indexOf(lng) >= 0) {
-            log.debug(util.format('Changed the language from %s to %s', i18n.lng(), lng));
+            log.debug('Changed the language from %s to %s', i18n.lng(), lng);
             i18n.persistCookie(req, res, lng); // set cookie value for the language
             res.send(200);
         } else {
-            log.warn(util.format('You cannot change the language to %s', lng));
+            log.warn('You cannot change the language to %s', lng);
             res.send(403);
         }
     }
