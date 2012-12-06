@@ -10,25 +10,15 @@ var path = require('path'),
  * Express base configuration
  */
 module.exports = function(app) {
-    // Memory Session Store
-    var memorySessionStore = new express.session.MemoryStore();
-
-    // Logger
-    logger.init(settings.winston);
-
-    // Register app.locals (app.helper):
-    logger.registerAppHelper(app);
-
-    // I18n: use filesys
-    i18n.init(settings.i18next);
-
-    // Register app.locals (app.helper):
-    i18n.registerAppHelper(app);
-
     /**
      * Global configuration
      */
     app.configure(function() {
+        // Register app.locals (app.helper):
+        logger.registerAppHelper(app);
+
+        // Register app.locals (app.helper):
+        i18n.registerAppHelper(app);
 
         // Define view engine with its options
         app.engine('html', engines.hogan);
@@ -56,7 +46,6 @@ module.exports = function(app) {
             cookie: {
                 maxAge: 365 * 24 * 60 * 60 * 1000 // one year
             }, // 1 minute
-            store: memorySessionStore,
             secret: settings.sessionSecret
         }));
 
