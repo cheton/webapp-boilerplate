@@ -63,12 +63,13 @@ var settings = {
         }
     },
     winston: {
+        prefix: '',
         transports: {
             Console: {
                 level: 'info',
-                silent: false,
+                silent: true,
                 colorize: true,
-                timestamp: true,
+                timestamp: true, // or function()
                 json: false,
                 handleExceptions: true
             },
@@ -76,8 +77,8 @@ var settings = {
                 level: 'info',
                 silent: false,
                 colorize: false,
-                timestamp: true,
-                filename: 'log/app-%s.log',
+                timestamp: true, // or function()
+                filename: 'log/app%s.log',
                 maxsize: 104857600,
                 maxFiles: 10,
                 json: true,
@@ -86,8 +87,8 @@ var settings = {
         },
         exceptionHandlers: {
             File: {
-                timestamp: true,
-                filename: 'log/error-%s.log',
+                timestamp: true, // or function()
+                filename: 'log/error%s.log',
                 maxsize: 104857600,
                 maxFiles: 10,
                 json: true
