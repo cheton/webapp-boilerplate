@@ -33,15 +33,15 @@ var defaultSettings = {
 var logger;
 
 function meta() {
-    var meta = {};
+    var _meta = {};
     if (cluster.isMaster) {
-        meta.id = 0;
-        meta.pid = process.pid;
+        _meta.id = 0;
+        _meta.pid = process.pid;
     } else if (cluster.isWorker) {
-        meta.id = cluster.worker.id;
-        meta.pid = cluster.worker.process.pid;
+        _meta.id = cluster.worker.id;
+        _meta.pid = cluster.worker.process.pid;
     }
-    return { meta: meta };
+    return { meta: _meta };
 }
 
 module.exports = function() {
@@ -50,7 +50,7 @@ module.exports = function() {
         arr.push(logger.settings.prefix);
     }
     return {
-        log: function(level) {
+        log: function() {
             var args = Array.prototype.slice.call(arguments);
             var level = args.shift();
             logger.log(level, util.format.apply(util.format, arr.concat(args)), meta());
