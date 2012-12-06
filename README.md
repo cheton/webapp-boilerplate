@@ -50,13 +50,16 @@ The WebApp Boilerplate is a frontend/backend JavaScript stack which is comprised
 ## Quick start
 
 Creating a development build with Grunt.
-
 ``` bash
-$ grunt build:dev run:dev
+$ grunt build:dev
 ```
 
 Creating a production build with Grunt.
-
 ``` bash
-$ grunt build:prod run:prod
+$ grunt build:prod
+```
+
+Run the app with supervisor.
+``` bash
+$ cd app; supervisor app.js
 ```
