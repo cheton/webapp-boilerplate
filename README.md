@@ -21,13 +21,13 @@ The WebApp Boilerplate is a frontend/backend JavaScript stack which is comprised
 
         $ git clone https://github.com/cheton/webapp-boilerplate.git
 
-2. Install [NodeJS](http://nodejs.org/) (>= 0.8)
+2. Install [NodeJS](http://nodejs.org/) (0.8.x)
 
     Click the link to download the Node.js source code or a pre-built installer for your platform.
 
     http://nodejs.org/download/
 
-3. Install [Node Package Manager](http://nodejs.org/) (>= 1.1)
+3. Install [Node Package Manager](http://nodejs.org/) (1.1.x)
 
     Click the link to download install script and follow the installation instructions.
 
@@ -44,22 +44,18 @@ The WebApp Boilerplate is a frontend/backend JavaScript stack which is comprised
         $ npm install -g supervisor
 
 5. Install Node modules using NPM
-
-        $ npm install
+    * If you have development related dependencies which you do not want to install in production, specify them using the `devDependencies` property.
+    * On development, using `npm install` will install dependencies specified in both the `dependencies` and `devDependencies` property.
+    * On production, using `npm install --production` will ensure that the development dependencies are not installed.
 
 ## Quick start
 
-Creating a development build with Grunt.
-``` bash
-$ grunt build:dev
-```
+* On development, use `grunt build:dev` to perform tasks such as linting and unit testing, and start the app with Supervisor to monitor changes.
 
-Creating a production build with Grunt.
-``` bash
-$ grunt build:prod
-```
+        $ grunt build:dev
+        $ cd app; supervisor app.js
 
-Run the app with supervisor.
-``` bash
-$ cd app; supervisor app.js
-```
+* On production, use `grunt build:prod` to create a production build. You can create a startup-script or init-script within your `/etc/init.d` folder, and it can be used to start, stop and respawn processes in the case of an exception crash.
+
+        $ grunt build:prod
+        $ cd app; node app.js
