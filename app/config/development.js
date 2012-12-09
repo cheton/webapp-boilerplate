@@ -4,13 +4,12 @@ var path = require('path'),
 
 var settings = {
     webroot: path.resolve(__dirname, '..', '..', 'web'),
+    uid: '', // UID
+    gid: '', // GID
 
-    siteName: 'yoursitename',
     sessionSecret: 'sessionSecret',
-    uri: 'http://localhost', // Without trailing /
     port: process.env.PORT || 8000,
-    debug: 0,
-    procfile: 0,
+    host: '',
 
     // App settings
     HISTORY_LIMIT_MSG_NUMBER: 50,
