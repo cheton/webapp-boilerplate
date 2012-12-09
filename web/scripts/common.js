@@ -23,7 +23,7 @@
             "libs.i18next": "../libraries/i18next/1.5.8/i18next-1.5.8",
 
             // Underscore
-            "libs.underscore": "../libraries/underscore/1.3.3/underscore",
+            "libs.underscore": "../libraries/underscore/1.4.3/underscore",
 
             // Backbone
             "libs.backbone": "../libraries/backbone/0.9.2/backbone",
