@@ -1,3 +1,6 @@
+// Change the current working directory to ensure that files are relative to the current directory.
+process.chdir(__dirname);
+
 // Module dependencies
 var cluster = require('cluster'),
     express = require('express'),
@@ -14,8 +17,9 @@ var log = logger();
 
 if (cluster.isMaster) {
 
-    log.info('master is running in ' + '%s'.bold.green + ' mode', env);
-    log.info('NodeJS-%s-%s', process.version, process.platform);
+    log.info('The app is running in ' + '%s'.bold.green + ' mode', env);
+    log.info('Starting directory:', process.cwd());
+    log.info('NodeJS-%s-%s-%s', process.version, process.platform, process.arch);
     log.info('Express-%s', express.version);
 
     // Fork workers
