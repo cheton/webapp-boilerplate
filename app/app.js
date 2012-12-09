@@ -67,6 +67,16 @@ if (cluster.isMaster) {
 
     var server = http.createServer(app);
     server.listen(settings.port, function() {
+        // Lower the process privileges by setting the UID and GUID after the process has mound to the port.
+        if (settings.uid) {
+            process.setuid(settings.uid);
+        }
+        if (settings.gid) {
+            process.setgid(settings.gid);
+        }
+        address = server.address();
+        log.info("opened server on %j", address);
+
         // Write your stuff
     });
 
