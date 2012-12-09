@@ -22,7 +22,8 @@
         "winston": "0.6.x",
         "hogan.js": "2.0.x",
         "sprintf": "0.1.x",
-        "i18next": "1.5.x"
+        "i18next": "1.5.x",
+        "underscore": "1.4.x"
     },
     "devDependencies": {
         "grunt": "0.3.x",
