@@ -74,7 +74,7 @@ if (cluster.isMaster) {
         if (settings.gid) {
             process.setgid(settings.gid);
         }
-        address = server.address();
+        var address = server.address();
         log.info("opened server on %j", address);
 
         // Write your stuff
