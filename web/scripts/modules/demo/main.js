@@ -6,10 +6,13 @@ var i18n = require("libs.i18next");
 var router = require("libs.director");
 
 function changePage(url) {
-    $("iframe[id='body-content']").attr("src", url);
+    $("iframe.iframe-content").attr("src", url);
 }
 
 var routes = {
+    '/dashboard': function() {
+        changePage('dashboard.html');
+    },
     '/basic': function() {
         changePage('basic.html');
     },
@@ -24,14 +27,14 @@ var routes = {
 module.exports = {
     init: function(app) {
         var _self = this;
-        var defaultPage = "#/basic";
+        var defaultPage = "#/dashboard";
         var activePage = location.hash;
 
         if ( ! activePage) {
             location.hash = defaultPage;
         }
 
-        $("ul[id='sidebar'] li").each(function() {
+        $("ul.main-menu > li").each(function() {
             var $anchor = $(this).find('a');
             if ($anchor.attr('href') === activePage) {
                 $(this).addClass("active");
@@ -40,7 +43,7 @@ module.exports = {
             }
         });
 
-        $("#sidebar").on("click", "li", function() {
+        $("ul.main-menu").on("click", "li", function() {
             $(this).siblings().removeClass("active");
             $(this).addClass("active");
         });
