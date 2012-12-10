@@ -4,7 +4,7 @@ define(function(require, exports, module) {
 /**
  * Modules
  */
-var log = require("utils/log");
+var log = require("lib/log");
 var Backbone = require("libs.backbone");
 var $ = require("libs.jquery");
 var i18n = require("libs.i18next");

@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
 "use strict";
 
-var log = require("utils/log");
+var log = require("lib/log");
 var $ = require("libs.jquery");
 var i18n = require("libs.i18next");
 

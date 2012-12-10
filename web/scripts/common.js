@@ -29,20 +29,20 @@
             "libs.backbone": "../libraries/backbone/0.9.2/backbone",
 
             // jQuery
-            "libs.jquery": "../libraries/jquery/1.8.2/jquery-1.8.2",
+            "libs.jquery": "../libraries/jquery/1.8.3/jquery-1.8.3",
 
             // jQuery UI
-            "libs.jquery-ui": "../libraries/jquery-ui/1.8.24/ui/jquery-ui",
+            "libs.jquery-ui": "../libraries/jquery-ui/1.9.2/jquery-ui",
 
             // jQuery Plugins
-            "libs.jquery-plugins.dataTables": "../libraries/jquery-plugins/jquery-dataTables/jquery.dataTables",
-            "libs.jquery-plugins.dataTables.themes.bootstrap": "../libraries/jquery-plugins/jquery-dataTables/themes/DT_bootstrap",
-            "libs.jquery-plugins.jsrender": "../libraries/jquery-plugins/jsrender/jsrender",
+            "libs.jquery-plugins.dataTables": "../libraries/jquery-plugins/jquery-dataTables/1.9.0/jquery.dataTables",
+            "libs.jquery-plugins.dataTables.themes.bootstrap": "../libraries/jquery-plugins/jquery-dataTables/1.9.0/themes/DT_bootstrap",
+            "libs.jquery-plugins.jsrender": "../libraries/jquery-plugins/jsrender/1.0pre/jsrender",
 
             // RequireJS Plugins
             "text": "../libraries/requirejs-plugins/text/2.0.3/text",
             "domReady": "../libraries/requirejs-plugins/domReady/2.0.1/domReady",
-            "cs": "../libraries/requirejs-plugins/cs/0.4.2/cs",
+            "cs": "../libraries/requirejs-plugins/cs/0.4.3/cs",
             "i18n": "../libraries/requirejs-plugins/i18n/2.0.1/i18n",
             "json": "../libraries/requirejs-plugins/json/0.2.1/json"
         },

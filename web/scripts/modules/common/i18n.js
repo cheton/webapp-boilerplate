@@ -3,7 +3,7 @@ define(function(require, exports, module) {
 
 var $ = require("libs.jquery");
 var i18n = require("libs.i18next");
-var log = require("utils/log");
+var log = require("lib/log");
 var settings = require("config/settings");
 
 /**

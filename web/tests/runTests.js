@@ -5,7 +5,7 @@ var modules = [
     "modules/app.launcher"
 ];
 
-var log = require("../scripts/utils/log").log;
+var log = require("../scripts/lib/log").log;
 
 function param(obj) {
     var serial = [];

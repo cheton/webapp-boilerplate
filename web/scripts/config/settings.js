@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
 "use strict";
 
-var has = require("utils/has");
+var has = require("lib/has");
 
 var settings = {};
 

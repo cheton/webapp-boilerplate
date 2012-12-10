@@ -81,7 +81,7 @@ requirejs.config({
      *
      * During development it can be useful to use this, however be sure to remove it before deploying your code.
      */
-    urlArgs: "v=" + _version,
+    urlArgs: has("production") ? "v=" + _version : "v=" + (new Date()).getTime(),
 
     /** 
      * scriptType: Specify the value for the type="" attribute used for script tags inserted into the

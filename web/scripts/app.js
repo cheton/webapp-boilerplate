@@ -1,8 +1,8 @@
 define(function(require, exports, module) {
 "use strict";
 
-var log = require("utils/log");
-var has = require("utils/has");
+var log = require("lib/log");
+var has = require("lib/has");
 var appRouter = require("app.router");
 var appLauncher = require("app.launcher");
 var settings = require("config/settings");
