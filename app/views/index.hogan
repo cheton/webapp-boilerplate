@@ -21,7 +21,7 @@
     <div class="container">
         <h1>WebApp Boilerplate</h1>
         <p>This is WebApp Boilerplate. Click the button below to view a demo:</p>
-        <p><a href="demo.html" class="btn btn-primary btn-large">Demo</a></p>
+        <p><a href="demo" class="btn btn-primary btn-large">Demo</a></p>
     </div>
 </div>
 <script type="text/javascript" src="scripts/plugins.js"></script>

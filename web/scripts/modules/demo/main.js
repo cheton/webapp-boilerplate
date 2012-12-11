@@ -11,16 +11,16 @@ function changePage(url) {
 
 var routes = {
     '/dashboard': function() {
-        changePage('dashboard.html');
+        changePage('dashboard');
     },
     '/basic': function() {
-        changePage('basic.html');
+        changePage('basic');
     },
     '/advanced': function() {
-        changePage('advanced.html');
+        changePage('advanced');
     },
     '/table': function() {
-        changePage('table.html');
+        changePage('table');
     }
 };
 
