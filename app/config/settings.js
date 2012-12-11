@@ -2,6 +2,11 @@ var _ = require('underscore');
 
 var settings = {
 // Default settings
+    defaultViewEngine: 'hogan',
+    viewEngines: [
+        'hogan',
+        'jade'
+    ]
 };
 
 module.exports = function() {

@@ -1,5 +1,6 @@
 // Module dependencies
 var path = require('path'),
+    fs = require('fs'),
     i18n = require('i18next'),
     settings = require('./config/settings')();
 
@@ -33,7 +34,6 @@ module.exports = function(app) {
             lng = settings.i18next.fallbackLng || settings.supportedLngs[0];
             i18n.persistCookie(req, res, lng); // set cookie value for the languge
         }
-
         res.render(view, {
             'lang': lng,
             'title': res.locals.t('title'),
@@ -53,15 +53,37 @@ module.exports = function(app) {
     ]);
 
     // default view
-    app.get('/*.html', function(req, res) {
-        var view = req.params[0];
-        renderView(req, res, view);
+    app.get('/*', function(req, res, next) {
+        var view = req.params[0] || 'index';
+        var file = view + '.' + settings.defaultViewEngine; // default is .hogan
+        if (fs.existsSync(path.resolve(__dirname, 'views', file))) {
+            renderView(req, res, view);
+            return;
+        }
+
+        next();
     });
 
-    // default route
-    app.get('/', function(req, res) {
-        renderView(req, res, 'index');
+    /* 
+    app.get('/404', function(req, res, next){
+        // trigger a 404 since no other middleware
+        // will match /404 after this one, and we're not
+        // responding here
+        next();
     });
+
+    app.get('/403', function(req, res, next){
+        // trigger a 403 error
+        var err = new Error('not allowed!');
+        err.status = 403;
+        next(err);
+    });
+
+    app.get('/500', function(req, res, next){
+        // trigger a generic (500) error
+        next(new Error('keyboard cat!'));
+    });
+    */
 
     return module.exports;
 

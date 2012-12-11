@@ -21,9 +21,12 @@ module.exports = function(app) {
         i18n.registerAppHelper(app);
 
         // Define view engine with its options
-        app.engine('html', engines.hogan);
+        for (var i = 0; i < settings.viewEngines.length; ++i) {
+            var engine = settings.viewEngines[i];
+            app.engine(engine, engines[engine]);
+        }
+        app.set('view engine', settings.defaultViewEngine);
         app.set('views', path.resolve(__dirname, 'views'));
-        app.set('view engine', 'html');
 
         // Enables reverse proxy support
         app.enable('trust proxy');
@@ -68,9 +71,20 @@ module.exports = function(app) {
         app.use(i18n.handle);
 
         // Static resources
-        app.use(express.static(settings.webroot));
+        for (var route in settings.webroot) {
+            if ( ! settings.webroot.hasOwnProperty(route)) {
+                continue;
+            }
+            var serveAssets = settings.webroot[route].serveAssets;
+            app.use(route, express.static(serveAssets));
+        }
 
-        // Routing with Express
+        // "app.router" positions our routes 
+        // above the middleware defined below,
+        // this means that Express will attempt
+        // to match & call routes _before_ continuing
+        // on, at which point we assume it's a 404 because
+        // no route has handled the request.
         app.use(app.router);
 
         // Log errors
@@ -90,14 +104,43 @@ module.exports = function(app) {
             }
         });
 
-        // 500 status
-        app.use(function(err, req, res, next) {
-            res.status(500).send(err);
-        });
-
         // 404 status
         app.use(function(req, res, next) {
-            res.status(404).end();
+            res.status(404);
+
+            // respond with html page
+            if (req.accepts('html')) {
+                res.render(path.join('common', '404.hogan'), { url: req.url });
+                return;
+            }
+
+            // respond with json
+            if (req.accepts('json')) {
+                res.send({ error: 'Not found' });
+                return;
+            }
+
+            // default to plain-text. send()
+            res.type('txt').send('Not found');
+        });
+
+        // error-handling middleware, take the same form
+        // as regular middleware, however they require an
+        // arity of 4, aka the signature (err, req, res, next).
+        // when connect has an error, it will invoke ONLY error-handling
+        // middleware.
+
+        // If we were to next() here any remaining non-error-handling
+        // middleware would then be executed, or if we next(err) to
+        // continue passing the error, only error-handling middleware
+        // would remain being executed, however here
+        // we simply respond with an error page.
+        app.use(function(err, req, res, next) {
+            // we may use properties of the error object
+            // here and next(err) appropriately, or if
+            // we possibly recovered from the error, simply next().
+            res.status(err.status || 500);
+            res.render(path.join('common', '500.jade'), { error: err });
         });
 
     });
