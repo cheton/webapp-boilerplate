@@ -1,13 +1,9 @@
 // Module dependencies
-var path = require('path'),
-    connectAssets = require('connect-assets');
+var path = require('path');
 
 var settings = {
     webroot: {
-        '/': {
-            serveAssets: path.resolve(__dirname, '..', '..', 'web'),
-            builtAssets: path.resolve(__dirname, '..', '..', 'web.built')
-        }
+        '/': path.resolve(__dirname, '..', '..', 'web')
     },
     uid: '', // UID
     gid: '', // GID
@@ -106,19 +102,6 @@ module.exports = function() {
 };
 
 module.exports.init = function(app, express) {
-
-    // Enable dependency based asset loading
-    for (var route in settings.webroot) {
-        if ( ! settings.webroot.hasOwnProperty(route)) {
-            continue;
-        }
-        app.use(route, connectAssets({
-            // The directory assets will be read from
-            src: settings.webroot[route].serveAssets,
-            // Writes built asset files to disk using this directory in production environment, set to false to disable
-            buildDir: settings.webroot[route].builtAssets || false
-        }));
-    }
 
     app.use(express.errorHandler({
         dumpExceptions: true,
