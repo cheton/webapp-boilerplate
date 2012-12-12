@@ -35,6 +35,7 @@ module.exports = function(app) {
             i18n.persistCookie(req, res, lng); // set cookie value for the languge
         }
         res.render(view, {
+            'version': settings.version,
             'lang': lng,
             'title': res.locals.t('title'),
             'dir': res.locals.t('config:dir')
@@ -57,7 +58,7 @@ module.exports = function(app) {
         var view = req.params[0] || 'index';
         var file = view + '.hogan';
         if (fs.existsSync(path.resolve(__dirname, 'views', file))) {
-            renderView(req, res, view);
+            renderView(req, res, file);
             return;
         }
 
