@@ -1,12 +1,30 @@
 var _ = require('underscore');
 
-var settings = {
-// Default settings
-    defaultViewEngine: 'hogan',
-    viewEngines: [
-        'hogan',
-        'jade'
-    ]
+var settings = { // Default settings
+    view: {
+        /**
+         * Set html (w/o dot) as the default extension
+         */
+        defaultExtension: 'html',
+        
+        /**
+         * Format: <extension>: <template>
+         */
+        engines: [
+            { // Hogan template with .html extension
+                extension: 'html',
+                template: 'hogan'
+            },
+            { // Hogan template with .hogan extension
+                extension: 'hogan',
+                template: 'hogan'
+            },
+            { // Jade template with .jade extension
+                extension: 'jade',
+                template: 'jade'
+            }
+        ]
+    }
 };
 
 module.exports = function() {

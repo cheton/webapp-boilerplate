@@ -55,7 +55,7 @@ module.exports = function(app) {
     // default view
     app.get('/*', function(req, res, next) {
         var view = req.params[0] || 'index';
-        var file = view + '.' + settings.defaultViewEngine; // default is .hogan
+        var file = view + '.hogan';
         if (fs.existsSync(path.resolve(__dirname, 'views', file))) {
             renderView(req, res, view);
             return;

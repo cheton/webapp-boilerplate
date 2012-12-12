@@ -21,11 +21,12 @@ module.exports = function(app) {
         i18n.registerAppHelper(app);
 
         // Define view engine with its options
-        for (var i = 0; i < settings.viewEngines.length; ++i) {
-            var engine = settings.viewEngines[i];
-            app.engine(engine, engines[engine]);
+        for (var i = 0; i < settings.view.engines.length; ++i) {
+            var extension = settings.view.engines[i].extension;
+            var template = settings.view.engines[i].template;
+            app.engine(extension, engines[template]);
         }
-        app.set('view engine', settings.defaultViewEngine);
+        app.set('view engine', settings.view.defaultExtension);
         app.set('views', path.resolve(__dirname, 'views'));
 
         // Enables reverse proxy support
@@ -75,8 +76,8 @@ module.exports = function(app) {
             if ( ! settings.webroot.hasOwnProperty(route)) {
                 continue;
             }
-            var serveAssets = settings.webroot[route].serveAssets;
-            app.use(route, express.static(serveAssets));
+            var staticAssets = settings.webroot[route];
+            app.use(route, express.static(staticAssets));
         }
 
         // "app.router" positions our routes 
