@@ -73,7 +73,7 @@
     </div>
 </div>
 <noscript></noscript>
-<script type="text/javascript" src="scripts/plugins.js"></script>
+<script type="text/javascript" data-version="{{version}}" src="scripts/plugins.js"></script>
 <script type="text/javascript" data-main="scripts/main" src="libraries/requirejs/require.js"></script>
 </body>
 </html>

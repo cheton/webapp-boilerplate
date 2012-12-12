@@ -1,7 +1,5 @@
 (function() {
 
-var _version = "";
-
 // fake the "has" function for development mode
 var has = has || function() { return false; };
 
@@ -31,17 +29,13 @@ requirejs.config({
      * Modules can then read that info by asking for the special dependency "module" and calling
      * module.config().
      */
-    config: {
-        "app": {
-            version: _version
-        }
-    },
+    //config: {}
 
     /**
      * waitSeconds: The number of seconds to wait before giving up on loading a script. The
      * default is 7 seconds.
      */
-    waitSeconds: 15,
+    //waitSeconds: 15,
 
     /**
      * context: A name to give to a loading context. This allows require.js to load multiple
@@ -81,7 +75,7 @@ requirejs.config({
      *
      * During development it can be useful to use this, however be sure to remove it before deploying your code.
      */
-    urlArgs: has("production") ? "v=" + _version : "v=" + (new Date()).getTime(),
+    //urlArgs: has("production") ? "v=" + _version : "v=" + (new Date()).getTime(),
 
     /** 
      * scriptType: Specify the value for the type="" attribute used for script tags inserted into the

@@ -1,6 +1,10 @@
 var _ = require('underscore');
+var pkg = require('../../package.json');
 
 var settings = { // Default settings
+    // version from package.json
+    version: pkg.version,
+    // Express view engine
     view: {
         /**
          * Set html (w/o dot) as the default extension
