@@ -35,16 +35,16 @@ module.exports = function() {
     return settings;
 };
 
-module.exports.init = function(app, express) {
+module.exports.init = function(app) {
     var _settings = {};
     // PRODUCTION
     if ('production' === app.settings.env) {
-        _settings = require('./production').init(app, express)();
+        _settings = require('./production').init(app)();
         settings = _.extend(settings, _settings);
     }
     // DEVELOPMENT
     if ('development' === app.settings.env) {
-        _settings = require('./development').init(app, express)();
+        _settings = require('./development').init(app)();
         settings = _.extend(settings, _settings);
     }
 

@@ -1,9 +1,11 @@
 // Module dependencies
-var path = require('path');
+var path = require('path'),
+    express = require('express');
 
 var settings = {
     webroot: {
-        '/': path.resolve(__dirname, '..', '..', 'web')
+        route: '/', // a trailing slash is required
+        assets: path.resolve(__dirname, '..', '..', 'web')
     },
     uid: '', // UID
     gid: '', // GID
@@ -98,7 +100,7 @@ module.exports = function() {
     return settings;
 };
 
-module.exports.init = function(app, express) {
+module.exports.init = function(app) {
 
     app.use(express.errorHandler());
 

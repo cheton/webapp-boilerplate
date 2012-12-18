@@ -1,88 +1,163 @@
-// Change the current working directory to ensure that files are relative to the current directory.
-process.chdir(__dirname);
-
 // Module dependencies
-var cluster = require('cluster'),
+var path = require('path'),
     express = require('express'),
-    http = require('http');
+    http = require('http'),
+    engines = require('consolidate');
 
 var app = express(),
     env = app.settings.env;
 
-var settings = require('./config/settings').init(app, express)(),
-    logger = require('./lib/logger').init(settings.winston),
-    i18n = require('i18next').init(settings.i18next);
+var logger = require('./lib/logger'),
+    i18n = require('i18next'),
+    settings = require('./config/settings').init(app)();
+
+logger.init(settings.winston);
+i18n.init(settings.i18next);
 
 var log = logger();
 
-if (cluster.isMaster) {
+// Register app.locals (app.helper):
+logger.registerAppHelper(app);
 
-    log.info('The app is running in ' + '%s'.bold.green + ' mode', env);
-    log.info('Starting directory:', process.cwd());
-    log.info('NodeJS-%s-%s-%s', process.version, process.platform, process.arch);
-    log.info('Express-%s', express.version);
+// Register app.locals (app.helper):
+i18n.registerAppHelper(app);
 
-    // Fork workers
-    var cpus = require('os').cpus().length;
-    for (var i = 0; i < cpus; ++i) {
-        cluster.fork();
+// Define view engine with its options
+for (var i = 0; i < settings.view.engines.length; ++i) {
+    var extension = settings.view.engines[i].extension;
+    var template = settings.view.engines[i].template;
+    app.engine(extension, engines[template]);
+}
+app.set('view engine', settings.view.defaultExtension);
+app.set('views', path.resolve(__dirname, 'views'));
+
+// Enables reverse proxy support
+app.enable('trust proxy');
+app.enable('jsonp callback');
+
+// Set uncompressed html output and disable layout templating
+app.locals({
+    pretty: true,
+    layout: false
+});
+
+app.use(express.favicon());
+
+// Parses x-www-form-urlencoded request bodies (and json)
+app.use(express.bodyParser());
+app.use(express.methodOverride());
+app.use(express.logger({ format: '\x1b[1m:method\x1b[0m \x1b[33m:url\x1b[0m \x1b[34m:status\x1b[0m :response-time ms' }));
+app.use(express.cookieParser());
+app.use(express.session({
+    cookie: {
+        maxAge: 365 * 24 * 60 * 60 * 1000 // one year
+    }, // 1 minute
+    secret: settings.sessionSecret
+}));
+
+// ## CORS middleware
+// see: http://stackoverflow.com/questions/7067966/how-to-allow-cors-in-express-nodejs
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Cache-Control', 'private, max-age=0');
+    res.header('Expires', new Date().toUTCString());
+                                                                                  
+    if ('OPTIONS' === req.method) {
+        res.send(200);
+    } else {
+        next();
+    }
+});
+// i18next routing
+app.use(i18n.handle);
+
+// Static resources
+if (settings.webroot.route) {
+    app.use(settings.webroot.route, express.static(settings.webroot.assets));
+} else {
+    app.use(express.static(settings.webroot.assets));
+}
+
+// "app.router" positions our routes 
+// above the middleware defined below,
+// this means that Express will attempt
+// to match & call routes _before_ continuing
+// on, at which point we assume it's a 404 because
+// no route has handled the request.
+app.use(app.router);
+
+// Log errors
+app.use(function(err, req, res, next) {
+    console.log(err.stack);
+    next(err);
+});
+
+// Client errors
+app.use(function(err, req, res, next) {
+    if (req.xhr) {
+        res.send(500, {
+            error: 'Something blew up!'
+        });
+    } else {
+        next(err);
+    }
+});
+
+// 404 status
+app.use(function(req, res, next) {
+    res.status(404);
+
+    // respond with html page
+    if (req.accepts('html')) {
+        res.render(path.join('common', '404.hogan'), { url: req.url });
+        return;
     }
 
-    // Event: message
-    Object.keys(cluster.workers).forEach(function(id) {
-        cluster.workers[id].on('message', function(msg) {
-            if (msg.cmd === 'bonjour') {
-                log.debug('Received a bonjour command from worker #%d(pid=%d)', this.id, this.process.pid);
-                this.send({reply: 'ok'});
-            }
-        });
-    });
+    // respond with json
+    if (req.accepts('json')) {
+        res.send({ error: 'Not found' });
+        return;
+    }
 
-    // Event: online
-    cluster.on('online', function(worker) {
-        log.info('The worker #%d(pid=%d) is online', worker.id, worker.process.pid);
-    });
+    // default to plain-text. send()
+    res.type('txt').send('Not found');
+});
 
-    // Event: listening
-    cluster.on('listening', function(worker, address) {
-        log.info('The worker #%d(pid=%d) is listening on ' + '%s:%d'.bold.red, worker.id, worker.process.pid, address.address, address.port);
-    });
+// error-handling middleware, take the same form
+// as regular middleware, however they require an
+// arity of 4, aka the signature (err, req, res, next).
+// when connect has an error, it will invoke ONLY error-handling
+// middleware.
 
-    // Event: disconnect
-    cluster.on('disconnect', function(worker) {
-        log.info('The worker #%d(pid=%d) has disconnected', worker.id, worker.process.pid);
-    });
+// If we were to next() here any remaining non-error-handling
+// middleware would then be executed, or if we next(err) to
+// continue passing the error, only error-handling middleware
+// would remain being executed, however here
+// we simply respond with an error page.
+app.use(function(err, req, res, next) {
+    // we may use properties of the error object
+    // here and next(err) appropriately, or if
+    // we possibly recovered from the error, simply next().
+    res.status(err.status || 500);
+    res.render(path.join('common', '500.jade'), { error: err });
+});
 
-    // Event: exit
-    cluster.on('exit', function(worker, code, signal) {
-        var exitCode = worker.process.exitCode;
-        log.info('The worker #%d(pid=%d) died (%d). restarting...', worker.id, worker.process.pid, exitCode);
-        cluster.fork();
-    });
+// Route separation
+require('./app.routes')(app);
 
-} else if (cluster.isWorker) {
+var server = http.createServer(app);
+server.listen(settings.port, function() {
+    // Lower the process privileges by setting the UID and GUID after the process has mound to the port.
+    if (settings.uid) {
+        process.setuid(settings.uid);
+    }
+    if (settings.gid) {
+        process.setgid(settings.gid);
+    }
+    var address = server.address();
+    log.info('Server is listening on %s:%d', address.address, address.port);
 
-    require('./app.configure')(app);
-    require('./app.main')(app);
-
-    var server = http.createServer(app);
-    server.listen(settings.port, function() {
-        // Lower the process privileges by setting the UID and GUID after the process has mound to the port.
-        if (settings.uid) {
-            process.setuid(settings.uid);
-        }
-        if (settings.gid) {
-            process.setgid(settings.gid);
-        }
-        var address = server.address();
-        log.info("opened server on %j", address);
-
-        // Write your stuff
-    });
-
-    process.send({cmd: 'bonjour'});
-    process.on('message', function(msg) {
-        log.debug('Received a bonjour reply from master: %s', JSON.stringify(msg));
-    });
-
-}
+    // Write your stuff
+});

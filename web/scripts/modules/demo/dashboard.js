@@ -15,6 +15,11 @@ var i18n = require("libs.i18next");
 require("libs.jquery-plugins.jsrender");
 
 /**
+ * Styles
+ */
+var style = require("text!modules/demo/dashboard.css");
+
+/**
  * Templates
  */
 var templateScripts = require("text!modules/demo/tmpl.demo.html");
@@ -48,6 +53,8 @@ var Dashboard = Backbone.View.extend({
  */
 module.exports = {
     init: function(app) {
+        app.loadCSS(style);
+
         var dashboard = new Dashboard({
             /**
              * The "el" property references the DOM object created in the browser.
