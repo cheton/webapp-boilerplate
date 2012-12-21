@@ -1,17 +1,18 @@
 var settings = {
+    sessionSecret: 'SessionSecretForDevelopment',
     winston: {
         prefix: '',
         transports: {
             Console: {
-                level: 'info',
-                silent: true,
+                level: 'trace',
+                silent: false,
                 colorize: true,
                 timestamp: true, // or function()
                 json: false,
                 handleExceptions: true
             },
             File: {
-                level: 'info',
+                level: 'trace',
                 silent: false,
                 colorize: false,
                 timestamp: true, // or function()

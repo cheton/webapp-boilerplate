@@ -51,7 +51,20 @@ if (cluster.isMaster) {
 
 } else if (cluster.isWorker) {
 
-    require('./app');
+    var app = require('./app');
+    var server = require('http').createServer(app);
+    var settings = require('./config/settings'); // the configuration settings have been initialized
+    server.listen(settings.port, function() {
+        // Lower the process privileges by setting the UID and GUID after the process has mound to the port.
+        if (settings.uid) {
+            process.setuid(settings.uid);
+        }
+        if (settings.gid) {
+            process.setgid(settings.gid);
+        }
+        var address = server.address();
+        console.log('Server is listening on %s:%d', address.address, address.port);
+    });
 
     process.send({cmd: 'bonjour'});
     process.on('message', function(msg) {

@@ -1,6 +1,6 @@
 {
     "name": "webapp-boilerplate",
-    "version": "0.3.0",
+    "version": "0.2.0",
     "description": "WebApp Boilerplate",
     "private": true,
     "author": "Cheton Wu <cheton@gmail.com>",
@@ -15,12 +15,14 @@
     "dependencies": {
         "express": "3.0.x",
         "colors": "0.6.x",
+        "cookies": "0.3.x",
         "string-format": "0.2.x",
         "consolidate": "0.5.x",
         "winston": "0.6.x",
         "hogan.js": "2.0.x",
         "jade": "0.27.x",
         "sprintf": "0.1.x",
+        "i18next": "1.5.x",
         "underscore": "1.4.x"
     },
     "devDependencies": {

@@ -1,0 +1,17 @@
+{
+    "host1": {
+        "app": "webapp-boilerplate/app/app",
+        "settings": "webapp-boilerplate/app/config/settings",
+        "route": "/host1/"
+    },
+    "host2": {
+        "app": "webapp-boilerplate/app/app",
+        "settings": "webapp-boilerplate/app/config/settings",
+        "route": "/host2/"
+    },
+    "root": {
+        "app": "webapp-boilerplate/app/app",
+        "settings": "webapp-boilerplate/app/config/settings",
+        "route": "/"
+    }
+}

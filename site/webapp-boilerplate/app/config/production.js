@@ -1,4 +1,5 @@
 var settings = {
+    sessionSecret: 'SessionSecretForProduction',
     winston: {
         prefix: '',
         transports: {

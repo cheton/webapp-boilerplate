@@ -1,6 +1,6 @@
 // Module dependencies
 var i18n = require('i18next'),
-    settings = require('../config/settings')();
+    settings = require('../config/settings'),
     log = require('../lib/logger')();
 
 module.exports.all = [

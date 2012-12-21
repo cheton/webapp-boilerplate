@@ -2,7 +2,7 @@
 var path = require('path'),
     fs = require('fs'),
     i18n = require('i18next'),
-    settings = require('../config/settings')();
+    settings = require('../config/settings');
 
 module.exports.view = function(req, res, next) {
 

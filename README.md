@@ -53,9 +53,9 @@ The WebApp Boilerplate is a frontend/backend JavaScript stack which is comprised
 * On development, use `grunt build:dev` to perform tasks such as linting and unit testing, and start the app with Supervisor to monitor changes.
 
         $ grunt build:dev
-        $ cd app; supervisor app.js
+        $ cd app; supervisor main.js
 
 * On production, use `grunt build:prod` to create a production build. You can create a startup-script or init-script within your `/etc/init.d` folder, and it can be used to start, stop and respawn processes in the case of an exception crash.
 
         $ grunt build:prod
-        $ cd app; node app.js
+        $ cd app; node main.js

@@ -1,15 +1,13 @@
 // Module dependencies
-var fs = require('fs'),
-    path = require('path'),
+var path = require('path'),
     express = require('express'),
-    engines = require('consolidate'),
-    http = require('http'),
-    _ = require('underscore');
+    engines = require('consolidate');
 
-// Main app
-var app = express();
+var app = express(),
+    env = app.settings.env;
 
 var logger = require('./lib/logger'),
+    i18n = require('i18next'),
     settings = require('./config/settings');
 
 if ('production' === app.settings.env) {
@@ -28,11 +26,15 @@ if ('development' === app.settings.env) {
 }
 
 logger.init(settings.winston);
+i18n.init(settings.i18next);
 
 var log = logger();
 
 // Register app.locals (app.helper):
 logger.registerAppHelper(app);
+
+// Register app.locals (app.helper):
+i18n.registerAppHelper(app);
 
 // Define view engine with its options
 for (var i = 0; i < settings.view.engines.length; ++i) {
@@ -47,42 +49,58 @@ app.set('views', path.resolve(__dirname, 'views'));
 app.enable('trust proxy');
 app.enable('jsonp callback');
 
-/**
- * Auto-load bundled middleware
- */
-var middleware = {};
-
-fs.readdirSync(__dirname + '/lib/middleware').forEach(function(filename) {
-    if ( ! /\.js$/.test(filename)) {
-        return;
-    }
-    var name = path.basename(filename, '.js');
-    middleware[name] = require('./lib/middleware/' + name);
+// Set uncompressed html output and disable layout templating
+app.locals({
+    pretty: true,
+    layout: false
 });
 
-/**
- * Multihost
- */
-_.each(settings.multihost, function(options, host) {
+app.use(express.favicon());
 
-    var settings = require('../site/' + options.settings);
-    settings.route = options.route;
+// Parses x-www-form-urlencoded request bodies (and json)
+app.use(express.bodyParser());
+app.use(express.methodOverride());
+app.use(express.logger({ format: '\x1b[1m:method\x1b[0m \x1b[33m:url\x1b[0m \x1b[34m:status\x1b[0m :response-time ms' }));
+app.use(express.cookieParser());
+app.use(express.session({
+    cookie: {
+        maxAge: 365 * 24 * 60 * 60 * 1000 // one year
+    }, // 1 minute
+    secret: settings.sessionSecret
+}));
 
-    /**
-     * Modules are cached after the first time they are loaded.
-     * The cached module must be invalidated to ensure data-independence in a multi-host environment.
-     */
-    if (require.cache[require.resolve('../site/' + options.app)]) {
-        delete require.cache[require.resolve('../site/' + options.app)];
+// ## CORS middleware
+// see: http://stackoverflow.com/questions/7067966/how-to-allow-cors-in-express-nodejs
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Cache-Control', 'private, max-age=0');
+    res.header('Expires', new Date().toUTCString());
+                                                                                  
+    if ('OPTIONS' === req.method) {
+        res.send(200);
+    } else {
+        next();
     }
-    var server = require('../site/' + options.app);
-
-    app.use(middleware.multihost({
-        hostname: options.hostname,
-        route: options.route,
-        server: server
-    }));
 });
+// i18next routing
+app.use(i18n.handle);
+
+// Static resources
+if (settings.route) {
+    app.use(settings.route, express.static(settings.asset));
+} else {
+    app.use(express.static(settings.asset));
+}
+
+// "app.router" positions our routes 
+// above the middleware defined below,
+// this means that Express will attempt
+// to match & call routes _before_ continuing
+// on, at which point we assume it's a 404 because
+// no route has handled the request.
+app.use(app.router);
 
 // Log errors
 app.use(function(err, req, res, next) {
@@ -107,7 +125,7 @@ app.use(function(req, res, next) {
 
     // respond with html page
     if (req.accepts('html')) {
-        res.render('404.hogan', { url: req.url });
+        res.render(path.join('common', '404.hogan'), { url: req.url });
         return;
     }
 
@@ -137,7 +155,10 @@ app.use(function(err, req, res, next) {
     // here and next(err) appropriately, or if
     // we possibly recovered from the error, simply next().
     res.status(err.status || 500);
-    res.render('500.jade', { error: err });
+    res.render(path.join('common', '500.jade'), { error: err });
 });
+
+// Route separation
+require('./app.routes')(app);
 
 module.exports = app;

@@ -4,6 +4,10 @@ var pkg = require('../../package.json');
 var settings = { // Default settings
     // version from package.json
     version: pkg.version,
+    uid: '', // UID
+    gid: '', // GID
+    port: process.env.PORT || 8000,
+    multihost: require('../../site/index.json'),
     // Express view engine
     view: {
         /**
@@ -31,22 +35,16 @@ var settings = { // Default settings
     }
 };
 
-module.exports = function() {
-    return settings;
-};
+var env = process.env.NODE_ENV || 'development';
+var _settings = {};
 
-module.exports.init = function(app) {
-    var _settings = {};
-    // PRODUCTION
-    if ('production' === app.settings.env) {
-        _settings = require('./production').init(app)();
-        settings = _.extend(settings, _settings);
-    }
-    // DEVELOPMENT
-    if ('development' === app.settings.env) {
-        _settings = require('./development').init(app)();
-        settings = _.extend(settings, _settings);
-    }
+if ('development' === env) {
+    _settings = require('./development');
+    settings = _.extend(settings, _settings);
+}
+if ('production' === env) {
+    _settings = require('./production');
+    settings = _.extend(settings, _settings);
+}
 
-    return module.exports;
-};
+module.exports = settings;

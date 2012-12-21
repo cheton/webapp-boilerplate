@@ -21,6 +21,13 @@ function rmdir(dir) {
         var list = fs.readdirSync(dir);
         for(var i = 0; i < list.length; i++) {
             var filename = path.join(dir, list[i]);
+
+            // This also occurs if a symbolic link exists but points to a file that is missing
+            if ( ! fs.existsSync(filename)) {
+                fs.unlinkSync(filename);
+                continue;
+            }
+
             var stat = fs.statSync(filename);
             
             if(filename == "." || filename == "..") {
@@ -29,7 +36,7 @@ function rmdir(dir) {
                 // rmdir recursively
                 rmdir(filename);
             } else {
-                // rm fiilename
+                // rm filename
                 fs.unlinkSync(filename);
             }
         }
