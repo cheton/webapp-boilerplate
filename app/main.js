@@ -51,7 +51,7 @@ if (cluster.isMaster) {
 
 } else if (cluster.isWorker) {
 
-    var app = require('./app');
+    var app = require('./app')();
     var server = require('http').createServer(app);
     var settings = require('./config/settings'); // the configuration settings have been initialized
     server.listen(settings.port, function() {

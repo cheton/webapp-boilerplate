@@ -1,0 +1,18 @@
+[
+    {
+        "server": "webapp-boilerplate/app/multihost",
+        "route": "/host1/"
+    },
+    {
+        "server": "webapp-boilerplate/app/multihost",
+        "route": "/host2/"
+    },
+    {
+        "server": "webapp-boilerplate/app/multihost",
+        "hosts": [
+            "localhost",
+            "127.0.0.1"
+        ],
+        "route": "/"
+    }
+]

@@ -6,7 +6,7 @@ var settings = { // Default settings
     // version from package.json
     version: pkg.version,
     // Web
-    route: '/', // the web route may be replaced in a multi-host environment
+    route: '/',
     asset: path.resolve(__dirname, '..', '..', 'web'),
     // Express view engine
     view: {

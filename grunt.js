@@ -64,6 +64,21 @@ module.exports = function(grunt) {
                 'build/*'
             ]
         },
+        copy: {
+            prod: {
+                files: {
+                    'build/<%= pkg.name%>-<%= pkg.version %>/site/': 'site/**', // variables in destination
+                    'build/<%= pkg.name%>-<%= pkg.version %>/app/': 'app/**', // variables in destination
+                }
+            }
+        },
+        compress: {
+            prod: {
+                files: {
+                    'build/<%= pkg.name%>-<%= pkg.version %>.tgz': 'build/<%= pkg.name%>-<%= pkg.version %>/**'
+                }
+            }
+        },
         shell: {
             _options: {
                 failOnError: true,
@@ -94,6 +109,8 @@ module.exports = function(grunt) {
     // Load NPM tasks
     grunt.loadNpmTasks('grunt-requirejs');
     grunt.loadNpmTasks('grunt-contrib-coffee');
+    grunt.loadNpmTasks('grunt-contrib-compress');
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-shell');
 
     // Load task-related files from the tasks directory, relative to the grunt.js gruntfile.

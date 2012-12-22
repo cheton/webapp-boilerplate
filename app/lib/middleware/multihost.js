@@ -1,23 +1,23 @@
 /**
  * Multihost:
  * 
- * Setup multihost for the given `hostname`, `route` and `server`.
+ * Setup multihost for the given `hosts`, `route` and `server`.
  *
  *  app.use(middleware.multihost({
- *      hostname: 'foo.com',
+ *      hosts: 'foo.com',
  *      server: fooApp
  *  }))
  *  app.use(middleware.multihost({
- *      hostname: 'bar.com',
+ *      hosts: 'bar.com',
  *      server: barApp
  *  }))
  *  app.use(middleware.multihost({
- *      hostname: '*.com',
+ *      hosts: '*.com',
  *      route: '/foo',
  *      server: fooApp
  *  }))
  *  app.use(middleware.multihost({
- *      hostname: '*.com',
+ *      hosts: '*.com',
  *      route: '/bar',
  *      server: barApp
  *  }))
@@ -27,7 +27,7 @@
  *
  * The `server` may be a Connect server or a regular Node `http.Server`.
  *
- * @param {String} hostname
+ * @param {String} hosts
  * @param {String} route
  * @param {Server} server
  * @return {Function}
@@ -35,34 +35,41 @@
  */
 
 module.exports = function multihost(options) {
-    var hostname = options.hostname;
+    var hosts = options.hosts;
     var route = options.route;
     var server = options.server;
 
-    if (hostname && typeof(hostname) !== 'string') {
-        throw new Error('multihost hostname is not a string');
-    }
     if (route && typeof(route) !== 'string') {
-        throw new Error('multihost route is not a string');
+        throw new Error('multihost: route is not a string');
     }
     if ( ! server) {
-        throw new Error('multihost server required');
+        throw new Error('multihost: server required');
     }
-    // hostname
-    if (hostname) {
-        var regexp = new RegExp('^' + hostname.replace(/[*]/g, '(.*?)') + '$', 'i');
-        if (server.onvhost) {
-            server.onvhost(hostname);
+    // hosts
+    if (hosts) {
+        var regexps = [];
+        if (typeof hosts === 'string') {
+            hosts = [hosts];
+        }
+        for (var i = 0; i < hosts.length; ++i) {
+            regexps.push(new RegExp('^' + hosts[i].replace(/[*]/g, '(.*?)') + '$', 'i'));
         }
     }
     return function(req, res, next) {
-        // hostname
-        if (hostname) {
+        // hosts
+        if (regexps) {
             if ( ! req.headers.host) {
                 return next();
             }
-            var host = req.headers.host.split(':')[0];
-            if ( ! regexp.test(host)) {
+            var hostname = req.headers.host.split(':')[0]; // e.g. localhost:8000
+
+            for (var i = 0; i < regexps.length; ++i) {
+                var regexp = regexps[i];
+                if (regexp.test(hostname)) {
+                    break;
+                }
+            }
+            if (i === regexps.length) {
                 return next();
             }
         }
@@ -70,6 +77,7 @@ module.exports = function multihost(options) {
         if (route && req.url.indexOf(route) !== 0)  {
             return next();
         }
+        // server
         if (typeof(server) === 'function') {
             return server(req, res, next);
         }

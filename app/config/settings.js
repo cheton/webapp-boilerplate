@@ -7,7 +7,10 @@ var settings = { // Default settings
     uid: '', // UID
     gid: '', // GID
     port: process.env.PORT || 8000,
-    multihost: require('../../site/index.json'),
+    multihost: {
+        path: '../site',
+        index: require('./multihost.json')
+    },
     // Express view engine
     view: {
         /**
