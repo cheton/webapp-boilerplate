@@ -69,17 +69,29 @@ module.exports = function(grunt) {
             ]
         },
         copy: {
-            prod: {
+            pkg: {
                 files: {
-                    'build/<%= pkg.name%>-<%= pkg.version %>/web/': 'build/.tmp/web/**', // variables in destination
-                    'build/<%= pkg.name%>-<%= pkg.version %>/app/': 'app/**', // variables in destination
+                    'build/<%= pkg.name%>/': 'package.json' // variables in destination
+                }
+            },
+            app: {
+                files: {
+                    'build/<%= pkg.name%>/app/': 'app/**' // variables in destination
+                }
+            },
+            web: {
+                options: {
+                    basePath: 'build/.tmp/',
+                },
+                files: {
+                    'build/<%= pkg.name%>/': 'web/**' // variables in destination
                 }
             }
         },
         compress: {
             prod: {
                 files: {
-                    'build/<%= pkg.name%>-<%= pkg.version %>.tgz': 'build/<%= pkg.name%>-<%= pkg.version %>/**'
+                    'build/<%= pkg.name%>-<%= pkg.version %>.tgz': 'build/<%= pkg.name%>/**'
                 }
             }
         },
@@ -96,7 +108,7 @@ module.exports = function(grunt) {
                         'PORT': 8000
                     }
                 },
-                command: 'cd app; supervisor app.js'
+                command: 'cd app; NODE_ENV=development node main.js'
             },
             runProd: {
                 execOptions: {
@@ -105,7 +117,7 @@ module.exports = function(grunt) {
                         'PORT': 8000
                     }
                 },
-                command: 'cd build/<%= pkg.name%>-<%= pkg.version %>/app; node app.js'
+                command: 'cd build/<%= pkg.name%>-<%= pkg.version %>/app; NODE_ENV=production node main.js'
             }
         },
         requirejs: {
@@ -518,7 +530,7 @@ module.exports = function(grunt) {
 
     // Production tasks
     grunt.registerTask('build:prod', 'Make production build', function() {
-        grunt.task.run('clean:prod lint test qunit requirejs:prod copy:prod compress:prod');
+        grunt.task.run('clean:prod lint test qunit requirejs:prod copy:pkg copy:app copy:web compress:prod');
     });
     grunt.registerTask('run:prod', 'Run a production build', function() {
         grunt.task.run('shell:runProd');

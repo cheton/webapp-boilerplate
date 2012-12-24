@@ -65,43 +65,35 @@ module.exports = function(grunt) {
             ]
         },
         copy: {
-            prod: {
+            pkg: {
                 files: {
-                    'build/<%= pkg.name%>-<%= pkg.version %>/site/': 'site/**', // variables in destination
-                    'build/<%= pkg.name%>-<%= pkg.version %>/app/': 'app/**', // variables in destination
+                    'build/<%= pkg.name%>-<%= pkg.version %>/': 'package.json' // variables in destination
+                }
+            },
+            app: {
+                options: {
+                    basePath: 'app'
+                },
+                files: {
+                    'build/<%= pkg.name%>-<%= pkg.version %>/app/': 'app/**' // variables in destination
+                }
+            },
+            site: {
+                files: {
+                    'build/<%= pkg.name%>-<%= pkg.version %>/site/': 'site/*/build/**', // variables in destination
                 }
             }
         },
         compress: {
-            prod: {
+            app: {
                 files: {
-                    'build/<%= pkg.name%>-<%= pkg.version %>.tgz': 'build/<%= pkg.name%>-<%= pkg.version %>/**'
+                    'build/<%= pkg.name%>-<%= pkg.version %>-app.tgz': 'build/<%= pkg.name%>-<%= pkg.version %>/app/**'
                 }
-            }
-        },
-        shell: {
-            _options: {
-                failOnError: true,
-                stdout: true,
-                stderr: true
             },
-            runDev: {
-                execOptions: {
-                    env: {
-                        'NODE_ENV' : 'development',
-                        'PORT': 8000
-                    }
-                },
-                command: 'cd app; supervisor app.js'
-            },
-            runProd: {
-                execOptions: {
-                    env: {
-                        'NODE_ENV' : 'production',
-                        'PORT': 8000
-                    }
-                },
-                command: 'cd build/<%= pkg.name%>-<%= pkg.version %>/app; node app.js'
+            site: {
+                files: {
+                    'build/<%= pkg.name%>-<%= pkg.version %>-site.tgz': 'build/<%= pkg.name%>-<%= pkg.version %>/site/**'
+                }
             }
         }
     });
@@ -111,7 +103,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-shell');
 
     // Load task-related files from the tasks directory, relative to the grunt.js gruntfile.
     grunt.loadTasks('tasks');
@@ -120,16 +111,10 @@ module.exports = function(grunt) {
     grunt.registerTask('build:dev', 'Make development build', function() {
         grunt.task.run('lint test');
     });
-    grunt.registerTask('run:dev', 'Run a development build', function() {
-        grunt.task.run('shell:runDev');
-    });
 
     // Production tasks
     grunt.registerTask('build:prod', 'Make production build', function() {
-        grunt.task.run('clean:prod lint test');
-    });
-    grunt.registerTask('run:prod', 'Run a production build', function() {
-        grunt.task.run('shell:runProd');
+        grunt.task.run('clean:prod lint test copy:pkg copy:app copy:site'); // compress:app compress:site');
     });
 
     // Default tasks

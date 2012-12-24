@@ -11,7 +11,8 @@ The WebApp Boilerplate is a frontend/backend JavaScript stack which is comprised
 *   [i18next](http://i18next.com/) is a full-featured i18n javascript library for translating your webapplication.
 *   Logging with [Winston](https://github.com/flatiron/winston).
 *   URL routing with [Director](https://github.com/flatiron/director).
-*   Running multiple Node.js processes and sharing ports.
+*   Provides launching of multiple Node.js processes and sharing ports.
+*   Serves multiple express apps using multi-host middleware.
 *   Unit testing framework integration using PhantomJS with QUnit.
 *   Includes sample apps with jQuery, Underscore, Backbone and Twitter Bootstrap.
 
@@ -50,12 +51,15 @@ The WebApp Boilerplate is a frontend/backend JavaScript stack which is comprised
 
 ## Quick start
 
-* On development, use `grunt build:dev` to perform tasks such as linting and unit testing, and start the app with Supervisor to monitor changes.
+* On development, use `grunt dev` to perform tasks such as linting and unit testing, and start the app with Supervisor to monitor changes.
 
-        $ grunt build:dev
-        $ cd app; supervisor main.js
+        $ grunt dev
+        $ cd app; NODE_ENV=development node main.js
 
-* On production, use `grunt build:prod` to create a production build. You can create a startup-script or init-script within your `/etc/init.d` folder, and it can be used to start, stop and respawn processes in the case of an exception crash.
+* On production, use `grunt prod` to create a production build. You can create a startup-script or init-script within your `/etc/init.d` folder, and it can be used to start, stop and respawn processes in the case of an exception crash.
 
-        $ grunt build:prod
-        $ cd app; node main.js
+        $ grunt prod
+        $ BUILD=`pwd`/build/webapp-boilerplate-{version}
+        $ cd $BUILD/site/webapp-boilerplate; npm install --production
+        $ cd $BUILD/; npm install --production
+        $ NODE_ENV=production node app/main.js
