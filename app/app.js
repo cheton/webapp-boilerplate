@@ -62,8 +62,8 @@ module.exports = function() {
     /**
      * Multihost
      */
-    var _ = require('underscore');
-    _.each(settings.multihost.index, function(options) {
+    for (var i = 0; i < settings.multihost.index.length; ++i) {
+        var options = settings.multihost.index[i];
 
         /**
          * Modules are cached after the first time they are loaded.
@@ -87,8 +87,7 @@ module.exports = function() {
         }));
 
         log.info('Attached a multi-host server: %j', options);
-
-    });
+    }
 
     // Log errors
     app.use(function(err, req, res, next) {
