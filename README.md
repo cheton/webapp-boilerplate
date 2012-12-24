@@ -14,7 +14,7 @@ The WebApp Boilerplate is a frontend/backend JavaScript stack which is comprised
 *   Provides launching of multiple Node.js processes and sharing ports.
 *   Serves multiple express apps using multi-host middleware.
 *   Unit testing framework integration using PhantomJS with QUnit.
-*   Includes sample apps with jQuery, Underscore, Backbone and Twitter Bootstrap.
+*   Includes a sample [webapp-boilerplate](//github.com/cheton/webapp-boilerplate/tree/master/site/webapp-boilerplate) using jQuery, Underscore, Backbone and Twitter Bootstrap.
 
 ## Installation
 
