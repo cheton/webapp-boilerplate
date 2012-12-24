@@ -108,18 +108,16 @@ module.exports = function(grunt) {
     grunt.loadTasks('tasks');
 
     // Development tasks
-    grunt.registerTask('build:dev', 'Make development build', function() {
+    grunt.registerTask('dev', 'Make development build', function() {
         grunt.task.run('lint test');
     });
 
     // Production tasks
-    grunt.registerTask('build:prod', 'Make production build', function() {
+    grunt.registerTask('prod', 'Make production build', function() {
         grunt.task.run('clean:prod lint test copy:pkg copy:app copy:site'); // compress:app compress:site');
     });
 
     // Default tasks
-    grunt.registerTask('default', 'build:dev');
-    grunt.registerTask('dev', 'build:dev');
-    grunt.registerTask('prod', 'build:prod');
+    grunt.registerTask('default', 'dev');
 
 };
