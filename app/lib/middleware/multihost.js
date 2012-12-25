@@ -1,7 +1,7 @@
 /**
- * Multihost:
+ * Middleware: multihost
  * 
- * Setup multihost for the given `hosts`, `route` and `server`.
+ * Setup multi-host for the given `hosts`, `route` and `server`.
  *
  *  app.use(middleware.multihost({
  *      hosts: 'foo.com',
@@ -22,16 +22,17 @@
  *      server: barApp
  *  }))
  *  app.use(middleware.multihost({
+ *      hosts: [
+ *          '*.com',
+ *          'localhost'
+ *      ],
  *      server: mainApp
  *  }))
  *
  * The `server` may be a Connect server or a regular Node `http.Server`.
  *
- * @param {String} hosts
- * @param {String} route
- * @param {Server} server
+ * @param {Object} options
  * @return {Function}
- * @api public
  */
 
 module.exports = function multihost(options) {
