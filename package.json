@@ -21,7 +21,8 @@
         "hogan.js": "2.0.x",
         "jade": "0.27.x",
         "sprintf": "0.1.x",
-        "underscore": "1.4.x"
+        "underscore": "1.4.x",
+        "socket.io": "0.9.x"
     },
     "devDependencies": {
         "grunt": "0.3.x",

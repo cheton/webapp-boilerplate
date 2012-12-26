@@ -1,4 +1,9 @@
+var os = require('os');
+
 var settings = {
+    cluster: {
+        maxWorkers: os.cpus().length || 1
+    },
     sessionSecret: 'SessionSecretForProduction',
     winston: {
         prefix: '',

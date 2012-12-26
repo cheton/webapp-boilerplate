@@ -87,12 +87,14 @@ module.exports = function() {
     app.use(express.methodOverride());
     app.use(express.logger({ format: '\x1b[1m:method\x1b[0m \x1b[33m:url\x1b[0m \x1b[34m:status\x1b[0m :response-time ms' }));
     app.use(express.cookieParser());
+    /*
     app.use(express.session({ // TODO: use external session store for production
         cookie: {
             maxAge: 365 * 24 * 60 * 60 * 1000 // one year
         }, // 1 minute
         secret: settings.sessionSecret
     }));
+    */
     app.use(express.compress());
     if (settings.route) {
         app.use(settings.route, express.static(settings.asset));

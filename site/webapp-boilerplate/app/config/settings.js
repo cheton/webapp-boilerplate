@@ -6,6 +6,7 @@ var settings = { // Default settings
     // version from package.json
     version: pkg.version,
     // Web
+    port: process.env.PORT || 8000,
     route: '/',
     asset: path.resolve(__dirname, '..', '..', 'web'),
     // Express view engine
@@ -32,6 +33,9 @@ var settings = { // Default settings
                 template: 'jade'
             }
         ]
+    },
+    'socket.io': {
+        redis: false
     },
     // Supported languages
     supportedLngs: [
@@ -91,6 +95,10 @@ if ('development' === env) {
 if ('production' === env) {
     _settings = require('./production');
     settings = _.extend(settings, _settings);
+}
+
+if ( ! settings['socket.io'].redis) {
+    settings.cluster.maxWorkers = 1;
 }
 
 module.exports = settings;

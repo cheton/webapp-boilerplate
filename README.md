@@ -8,6 +8,8 @@ The WebApp Boilerplate is a frontend/backend JavaScript stack which is comprised
 *   [Grunt](http://gruntjs.com/) is a task-based command line build tool for JavaScript projects.
 *   [RequireJS](http://requirejs.org/) is a JavaScript file and module loader.
 *   [Express](http://expressjs.com/) is a minimal and flexible node.js web application framework, providing a robust set of features for building single and multi-page, and hybrid web applications.
+*   [Socket.IO](http://socket.io/) aims to make realtime apps possible in every browser and mobile device, blurring the differences between the different transport mechanisms.
+*   [Redis](http://redis.io/) is an open source, advanced key-value store. It is often referred to as a data structure server since keys can contain strings, hashes, lists, sets and sorted sets.
 *   [i18next](http://i18next.com/) is a full-featured i18n javascript library for translating your webapplication.
 *   Logging with [Winston](https://github.com/flatiron/winston).
 *   URL routing with [Director](https://github.com/flatiron/director).
@@ -49,9 +51,13 @@ The WebApp Boilerplate is a frontend/backend JavaScript stack which is comprised
     * On development, using `npm install` will install dependencies specified in both the `dependencies` and `devDependencies` property.
     * On production, using `npm install --production` will ensure that the development dependencies are not installed.
 
+6. Install [Redis](http://redis.io/) to use RedisStore in Socket.IO
+
+        $ yum install redis
+
 ## Quick start
 
-* On development, use `grunt dev` to perform tasks such as linting and unit testing, and start the app with Supervisor to monitor changes.
+* On development, use `grunt dev` to perform tasks such as linting and unit testing, and start the app with Node or Supervisor to monitor changes.
 
         $ grunt dev
         $ NODE_ENV=development node app/main.js

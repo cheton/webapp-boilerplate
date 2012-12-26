@@ -6,14 +6,15 @@ var cluster = require('cluster');
 require('colors');
 require('string-format');
 
+var settings = require('./config/settings'); // the configuration settings have been initialized
+
 if (cluster.isMaster) {
 
     console.log('Starting directory:', process.cwd());
     console.log('NodeJS-%s-%s-%s', process.version, process.platform, process.arch);
 
     // Fork workers
-    var cpus = require('os').cpus().length;
-    for (var i = 0; i < cpus; ++i) {
+    for (var i = 0; i < settings.cluster.maxWorkers; ++i) {
         cluster.fork();
     }
 
@@ -51,9 +52,10 @@ if (cluster.isMaster) {
 
 } else if (cluster.isWorker) {
 
-    var app = require('./app')();
-    var server = require('http').createServer(app);
-    var settings = require('./config/settings'); // the configuration settings have been initialized
+    var app = require('./app')(),
+        server = require('http').createServer(app),
+        io = require('./socket.io')(server);
+
     server.listen(settings.port, function() {
         // Lower the process privileges by setting the UID and GUID after the process has mound to the port.
         if (settings.uid) {
@@ -69,6 +71,16 @@ if (cluster.isMaster) {
     process.send({cmd: 'bonjour'});
     process.on('message', function(msg) {
         console.log('Received a bonjour reply from master: %s', JSON.stringify(msg));
+    });
+
+    io.sockets.on('connection', function(socket) {
+        socket.on('message', function(msg) {
+            console.log('Received a message: %s', msg);
+            socket.emit('message', { 'status': 'ok' });
+        });
+        socket.on('disconnect', function() {
+            console.log('Disconnected');
+        });
     });
 
 }

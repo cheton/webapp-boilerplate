@@ -16,6 +16,12 @@
             // Modernizr
             "libs.modernizr": "../libraries/modernizr/2.6.2/modernizr-2.6.2",
 
+            // Socket.IO
+            "libs.socket.io": [
+                "/socket.io/socket.io",
+                "../libraries/socket.io/0.9.11/socket.io",
+            ],
+
             // Director
             "libs.director": "../libraries/director/1.1.6/director-1.1.6",
 

@@ -1,9 +1,8 @@
 var _ = require('underscore');
-var pkg = require('../../package.json');
 
 var settings = { // Default settings
     // version from package.json
-    version: pkg.version,
+    version: require('../../package.json').version,
     uid: '', // UID
     gid: '', // GID
     port: process.env.PORT || 8000,
@@ -35,6 +34,9 @@ var settings = { // Default settings
                 template: 'jade'
             }
         ]
+    },
+    'socket.io': {
+        redis: false
     }
 };
 
@@ -48,6 +50,10 @@ if ('development' === env) {
 if ('production' === env) {
     _settings = require('./production');
     settings = _.extend(settings, _settings);
+}
+
+if ( ! settings['socket.io'].redis) {
+    settings.cluster.maxWorkers = 1;
 }
 
 module.exports = settings;

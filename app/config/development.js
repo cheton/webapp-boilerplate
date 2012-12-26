@@ -1,4 +1,7 @@
 var settings = {
+    cluster: {
+        maxWorkers: 1
+    },
     winston: {
         prefix: '',
         transports: {

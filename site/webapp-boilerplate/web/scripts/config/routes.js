@@ -26,7 +26,8 @@ module.exports = routes = {
      *
      */
     "*": [
-        "modules/common/i18n"
+        "modules/common/i18n",
+        "modules/common/socket.io"
     ],
     // Index
     "index": "modules/main/index",
