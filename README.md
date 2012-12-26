@@ -51,6 +51,7 @@ The WebApp Boilerplate is a frontend/backend JavaScript stack which is comprised
     * On development, using `npm install` will install dependencies specified in both the `dependencies` and `devDependencies` property.
     * On production, using `npm install --production` will ensure that the development dependencies are not installed.
 
+
 6. Install [Redis](http://redis.io/) to use RedisStore in Socket.IO
 
         $ yum install redis
