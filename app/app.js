@@ -107,11 +107,11 @@ module.exports = function() {
         error: 'XHR error'
     }));
     app.use(middleware.err_notfound({
-        view: path.join('common', '404.hogan'),
+        view: '404.hogan',
         error: 'Not found'
     }));
     app.use(middleware.err_server({
-        view: path.join('common', '500.jade'),
+        view: '500.jade',
         error: 'Internal server error'
     }));
 
