@@ -119,9 +119,17 @@ module.exports = function() {
      * Error handling
      */
     app.use(middleware.err_log());
-    app.use(middleware.err_client());
-    app.use(middleware.err_notfound());
-    app.use(middleware.err_server());
+    app.use(middleware.err_client({
+        error: 'XHR error'
+    }));
+    app.use(middleware.err_notfound({
+        view: path.join('common', '404.hogan'),
+        error: 'Not found'
+    }));
+    app.use(middleware.err_server({
+        view: path.join('common', '500.jade'),
+        error: 'Internal server error'
+    }));
 
     /**
      * Route separation

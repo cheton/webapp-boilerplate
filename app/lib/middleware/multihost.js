@@ -1,35 +1,42 @@
 /**
- * Middleware: multihost
+ * multihost:
  * 
  * Setup multi-host for the given `hosts`, `route` and `server`.
- *
- *  app.use(middleware.multihost({
- *      hosts: 'foo.com',
- *      server: fooApp
- *  }))
- *  app.use(middleware.multihost({
- *      hosts: 'bar.com',
- *      server: barApp
- *  }))
- *  app.use(middleware.multihost({
- *      hosts: '*.com',
- *      route: '/foo',
- *      server: fooApp
- *  }))
- *  app.use(middleware.multihost({
- *      hosts: '*.com',
- *      route: '/bar',
- *      server: barApp
- *  }))
- *  app.use(middleware.multihost({
- *      hosts: [
- *          '*.com',
- *          'localhost'
- *      ],
- *      server: mainApp
- *  }))
- *
  * The `server` may be a Connect server or a regular Node `http.Server`.
+ *
+ * Examples:
+ *
+ *   app.use(middleware.multihost({
+ *       hosts: 'foo.com',
+ *       server: fooApp
+ *   }))
+ *   app.use(middleware.multihost({
+ *       hosts: 'bar.com',
+ *       server: barApp
+ *   }))
+ *   app.use(middleware.multihost({
+ *       hosts: '*.com',
+ *       route: '/foo',
+ *       server: fooApp
+ *   }))
+ *   app.use(middleware.multihost({
+ *       hosts: '*.com',
+ *       route: '/bar',
+ *       server: barApp
+ *   }))
+ *   app.use(middleware.multihost({
+ *       hosts: [
+ *           '*.com',
+ *           'localhost'
+ *       ],
+ *       server: mainApp
+ *   }))
+ *
+ * Options:
+ *
+ *   - hosts   A virtual host string or an array of virtual host strings
+ *   - route   A route string containing the URI to be matched
+ *   - server  The `server` may be a Connect server or a regular Node `http.Server`
  *
  * @param {Object} options
  * @return {Function}

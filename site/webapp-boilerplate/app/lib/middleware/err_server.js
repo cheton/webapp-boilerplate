@@ -1,5 +1,5 @@
 /**
- * Middleware: err_server
+ * err_server:
  *
  * error-handling middleware, take the same form
  * as regular middleware, however they require an
@@ -12,14 +12,31 @@
  * continue passing the error, only error-handling middleware
  * would remain being executed, however here
  * we simply respond with an error page.
+ * 
+ * Examples:
+ *
+ *     app.use(middleware.err_server({ view: '500', error: 'Internal server error' }))
+ *
+ * Options:
+ *
+ *   - view     view
+ *   - error    error message
+ *
+ * @param {Object} options
+ * @return {Function}
+ * @api public
  */
 
-module.exports = function err_server() {
+module.exports = function err_server(options) {
+    var options = options || {},
+        view = options.view || '500',
+        error = options.error || '';
+
     return function(err, req, res, next) {
         // we may use properties of the error object
         // here and next(err) appropriately, or if
         // we possibly recovered from the error, simply next().
         res.status(err.status || 500);
-        res.render('500.jade', { error: err });
+        res.render(view, { error: error });
     };
 };

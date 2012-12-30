@@ -1,12 +1,27 @@
 /**
- * Middleware: err_client
+ * err_client
+ * 
+ * Examples:
+ *
+ *     app.use(middleware.err_client({ error: 'XHR error' }))
+ *
+ * Options:
+ *
+ *   - error    error message
+ *
+ * @param {Object} options
+ * @return {Function}
+ * @api public
  */
 
-module.exports = function err_client() {
+module.exports = function err_client(options) {
+    var options = options || {},
+        error = options.error || '';
+
     return function(err, req, res, next) {
         if (req.xhr) {
             res.send(500, {
-                error: 'Something blew up!'
+                error: error
             });
         } else {
             next(err);
