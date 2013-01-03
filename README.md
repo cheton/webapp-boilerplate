@@ -38,13 +38,14 @@ The WebApp Boilerplate is a frontend/backend JavaScript stack which is comprised
 
         $ curl http://npmjs.org/install.sh | sh
 
-4. Install [Grunt](http://gruntjs.com/), [PhantomJS](http://phantomjs.org/) and [Node Supervisor](https://github.com/isaacs/node-supervisor) globally using NPM
+4. Install [Grunt](http://gruntjs.com/), [PhantomJS](http://phantomjs.org/), [node-supervisor](http://github.com/isaacs/node-supervisor) and [forever](http://github.com/nodejitsu/forever) globally using NPM
 
     It will drop modules in {prefix}/lib/node_modules, and puts executables files in {prefix}/bin, where {prefix} is usually something like /usr or /usr/local.
 
         $ npm install -g grunt
         $ npm install -g phantomjs
-        $ npm install -g supervisor
+        $ npm install -g supervisor     # Use for development
+        $ npm install -g forever        # Use for production
 
 5. Install Node modules using NPM
     * If you have development related dependencies which you do not want to install in production, specify them using the `devDependencies` property.
@@ -60,7 +61,7 @@ The WebApp Boilerplate is a frontend/backend JavaScript stack which is comprised
 * On development, use `grunt dev` to perform tasks such as linting and unit testing, and start the app with Node or Supervisor to monitor changes.
 
         $ grunt dev
-        $ NODE_ENV=development node app/main.js
+        $ NODE_ENV=development supervisor app/main.js
 
 * On production, use `grunt prod` to create a production build. You can create a startup-script or init-script within your `/etc/init.d` folder, and it can be used to start, stop and respawn processes in the case of an exception crash.
 
@@ -68,4 +69,4 @@ The WebApp Boilerplate is a frontend/backend JavaScript stack which is comprised
         $ BUILD=`pwd`/build/webapp-boilerplate-{version}
         $ cd $BUILD/site/webapp-boilerplate; npm install --production
         $ cd $BUILD/; npm install --production
-        $ NODE_ENV=production node app/main.js
+        $ NODE_ENV=production forever app/main.js
