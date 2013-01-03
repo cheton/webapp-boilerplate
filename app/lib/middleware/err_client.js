@@ -15,8 +15,9 @@
  */
 
 module.exports = function err_client(options) {
-    var options = options || {},
-        error = options.error || '';
+    options = options || {};
+
+    var error = options.error || '';
 
     return function(err, req, res, next) {
         if (req.xhr) {

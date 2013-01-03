@@ -15,8 +15,9 @@
  */
 
 module.exports = function cors(options) {
-    var options = options || {},
-        allowedOrigin = options.allowedOrigin || '*';
+    options = options || {};
+
+    var allowedOrigin = options.allowedOrigin || '*';
 
     return function(req, res, next) {
         // Specify origin from which requests are allowed

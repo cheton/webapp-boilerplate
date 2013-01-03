@@ -16,8 +16,9 @@
  */
 
 module.exports = function err_notfound(options) {
-    var options = options || {},
-        view = options.view || '404',
+    options = options || {};
+
+    var view = options.view || '404',
         error = options.error || '';
 
     return function(req, res, next) {

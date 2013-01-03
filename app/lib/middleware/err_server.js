@@ -28,8 +28,9 @@
  */
 
 module.exports = function err_server(options) {
-    var options = options || {},
-        view = options.view || '500',
+    options = options || {};
+
+    var view = options.view || '500',
         error = options.error || '';
 
     return function(err, req, res, next) {
