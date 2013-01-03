@@ -57,12 +57,12 @@ if (cluster.isMaster) {
         io = require('./socket.io')(server);
 
     server.listen(settings.port, function() {
-        // Lower the process privileges by setting the UID and GUID after the process has mound to the port.
-        if (settings.uid) {
-            process.setuid(settings.uid);
-        }
+        // Lower the process privileges by setting the GID and UID after the process has mount to the port.
         if (settings.gid) {
             process.setgid(settings.gid);
+        }
+        if (settings.uid) {
+            process.setuid(settings.uid);
         }
         var address = server.address();
         console.log('Server is listening on %s:%d', address.address, address.port);
