@@ -7,8 +7,22 @@ var settings = { // Default settings
     gid: '', // GID
     port: process.env.PORT || 8000,
     multihost: {
-        path: '../site',
-        index: require('./multihost.json')
+        "/hosts1/": {
+            "server": "../site/webapp-boilerplate/app/multihost",
+            "route": "/host1/"
+        },
+        "/localhost/": {
+            "server": "../site/webapp-boilerplate/app/multihost",
+            "hosts": [
+                "localhost",
+                "127.0.0.1"
+            ],
+            "route": "/localhost/"
+        },
+        "/": {
+            "server": "../site/webapp-boilerplate/app/multihost",
+            "route": "/"
+        }
     },
     // Express view engine
     view: {

@@ -71,15 +71,18 @@ module.exports = function() {
      * Multi-host
      */
     (function(app) {
-        for (var i = 0; i < settings.multihost.index.length; ++i) {
-            var options = settings.multihost.index[i];
+        for (var i in settings.multihost) {
+            if ( ! settings.multihost.hasOwnProperty(i)) {
+                continue;
+            }
+            var options = settings.multihost[i];
 
             /**
              * Modules are cached after the first time they are loaded.
              * The cached module must be invalidated to ensure data-independence
              * in a multi-host environment.
              */
-            var server_path = path.join(settings.multihost.path, options.server);
+            var server_path = options.server;
             if (require.cache[server_path]) {
                 delete require.cache[server_path];
             }
