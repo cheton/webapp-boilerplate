@@ -54,6 +54,71 @@ var fs   = require('fs'),
         '.xml' : 'application/xml'
     };
 
+// BadRequest is used for all filesystem-related errors, including when a
+// requested file can't be found (a NotFound error wouldn't be appropriate in
+// that case since the route itself exists; it's the request that's at fault).
+function BadRequest(message) {
+    Error.call(this); // super constructor
+    Error.captureStackTrace(this, this.constructor); // super help method to include stack trace in error object
+
+    this.name = this.constructor.name; // set function name as error name
+    this.message = message; // set the error message
+}
+util.inherits(BadRequest, Error); // BadRequest.prototype.__proto__ = Error.prototype;
+
+function decode(string) {
+    return decodeURIComponent(string).replace(/\+/g, ' ');
+}
+
+/**
+ * Dedupes an array of strings, returning an array that's guaranteed to contain
+ * only one copy of a given string.
+ * 
+ * @method dedupe
+ * @param {String[]} array Array of strings to dedupe.
+ * @return {Array} Deduped copy of _array_.
+ **/
+function dedupe(array) {
+    var hash    = {},
+        results = [],
+        hasOwn  = Object.prototype.hasOwnProperty,
+        i, item, len;
+
+    for (i = 0, len = array.length; i < len; i += 1) {
+        item = array[i];
+
+        if ( ! hasOwn.call(hash, item)) {
+            hash[item] = 1;
+            results.push(item);
+        }
+    }
+
+    return results;
+}
+
+function getExtName(filename) {
+    return path.extname(filename).toLowerCase();
+}
+
+function getFileTypes(files) {
+    return dedupe(files.map(getExtName));
+}
+
+// Because querystring.parse() is silly and tries to be too clever.
+function parseQuery(url) {
+    var parsed = [],
+        query  = url.split('?')[1];
+
+    if (query) {
+        query.split('&').forEach(function (item) {
+            parsed.push(decode(item.split('=')[0]));
+        });
+    }
+
+    return parsed;
+}
+
+
 module.exports.combine = function(options) {
     options = options || {};
 
@@ -63,7 +128,7 @@ module.exports.combine = function(options) {
         // Intentionally using the sync method because this only runs when the
         // middleware is initialized, and we want it to throw if there's an
         // error.
-        rootPath = fs.realpathSync(config.rootPath);
+        rootPath = fs.realpathSync(options.rootPath);
 
     if (typeof maxAge === 'undefined') {
         maxAge = 31536000; // one year in seconds
@@ -157,67 +222,4 @@ module.exports.combine = function(options) {
     };
 };
 
-// BadRequest is used for all filesystem-related errors, including when a
-// requested file can't be found (a NotFound error wouldn't be appropriate in
-// that case since the route itself exists; it's the request that's at fault).
-function BadRequest(message) {
-    Error.call(this);
-    this.name = 'BadRequest';
-    this.message = message;
-    Error.captureStackTrace(this, arguments.callee);
-}
-util.inherits(BadRequest, Error);
 module.exports.BadRequest = BadRequest; // exported to allow instanceof checks
-
-// -- Private Methods ----------------------------------------------------------
-function decode(string) {
-    return decodeURIComponent(string).replace(/\+/g, ' ');
-}
-
-/**
- * Dedupes an array of strings, returning an array that's guaranteed to contain
- * only one copy of a given string.
- * 
- * @method dedupe
- * @param {String[]} array Array of strings to dedupe.
- * @return {Array} Deduped copy of _array_.
- **/
-function dedupe(array) {
-    var hash    = {},
-        results = [],
-        hasOwn  = Object.prototype.hasOwnProperty,
-        i, item, len;
-
-    for (i = 0, len = array.length; i < len; i += 1) {
-        item = array[i];
-
-        if ( ! hasOwn.call(hash, item)) {
-            hash[item] = 1;
-            results.push(item);
-        }
-    }
-
-    return results;
-}
-
-function getExtName(filename) {
-    return path.extname(filename).toLowerCase();
-}
-
-function getFileTypes(files) {
-    return dedupe(files.map(getExtName));
-}
-
-// Because querystring.parse() is silly and tries to be too clever.
-function parseQuery(url) {
-    var parsed = [],
-        query  = url.split('?')[1];
-
-    if (query) {
-        query.split('&').forEach(function (item) {
-            parsed.push(decode(item.split('=')[0]));
-        });
-    }
-
-    return parsed;
-}
