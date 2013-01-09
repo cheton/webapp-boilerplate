@@ -3,7 +3,7 @@
  * 
  * Examples:
  *
- *     app.use(middleware.err_client({ error: 'XHR error' }))
+ *     app.use(middleware.err_client({ error: 'XHR error' }));
  *
  * Options:
  *

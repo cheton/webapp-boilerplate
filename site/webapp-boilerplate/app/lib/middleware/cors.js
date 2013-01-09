@@ -3,7 +3,7 @@
  * 
  * Examples:
  *
- *   app.use(middleware.cors({ allowedOrigin: '*' }))
+ *   app.use(middleware.cors({ allowedOrigin: '*' }));
  *
  * Options:
  *

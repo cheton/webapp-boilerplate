@@ -5,7 +5,7 @@
  * 
  * Examples:
  *
- *   app.use(middleware.err_log())
+ *   app.use(middleware.err_log());
  *
  * @return {Function}
  * @api public

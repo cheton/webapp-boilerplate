@@ -3,7 +3,7 @@
  *
  * Examples:
  *
- *     app.use(middleware.err_notfound({ view: '404', error: 'Not found' }))
+ *     app.use(middleware.err_notfound({ view: '404', error: 'Not found' }));
  *
  * Options:
  *

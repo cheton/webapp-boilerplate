@@ -9,28 +9,28 @@
  *   app.use(middleware.multihost({
  *       hosts: 'foo.com',
  *       server: fooApp
- *   }))
+ *   }));
  *   app.use(middleware.multihost({
  *       hosts: 'bar.com',
  *       server: barApp
- *   }))
+ *   }));
  *   app.use(middleware.multihost({
  *       hosts: '*.com',
  *       route: '/foo',
  *       server: fooApp
- *   }))
+ *   }));
  *   app.use(middleware.multihost({
  *       hosts: '*.com',
  *       route: '/bar',
  *       server: barApp
- *   }))
+ *   }));
  *   app.use(middleware.multihost({
  *       hosts: [
  *           '*.com',
  *           'localhost'
  *       ],
  *       server: mainApp
- *   }))
+ *   }));
  *
  * Options:
  *

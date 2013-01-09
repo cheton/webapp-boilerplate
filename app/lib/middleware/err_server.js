@@ -15,7 +15,7 @@
  * 
  * Examples:
  *
- *     app.use(middleware.err_server({ view: '500', error: 'Internal server error' }))
+ *     app.use(middleware.err_server({ view: '500', error: 'Internal server error' }));
  *
  * Options:
  *
