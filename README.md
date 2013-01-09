@@ -14,7 +14,8 @@ The WebApp Boilerplate is a frontend/backend JavaScript stack which is comprised
 *   Logging with [Winston](https://github.com/flatiron/winston).
 *   URL routing with [Director](https://github.com/flatiron/director).
 *   Provides launching of multiple Node.js processes and sharing ports.
-*   Serves multiple express apps using multi-host middleware.
+*   Serves multiple express apps using multihost middleware.
+*   Provides combo handler service using combohandler middleware. You can use it with any other JavaScript or CSS to construct the combo URLs.
 *   Unit testing framework integration using PhantomJS with QUnit.
 *   Includes a sample [web](//github.com/cheton/webapp-boilerplate/tree/master/site/webapp-boilerplate/web) using RequireJS, jQuery, Underscore, Backbone and Twitter Bootstrap.
 
