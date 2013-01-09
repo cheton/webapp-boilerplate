@@ -31,6 +31,7 @@ module.exports = routes = {
     ],
     // Index
     "index": "modules/main/index",
+    "app": "modules/app/main",
     // Demo
     "demo": "modules/demo/main",
     "dashboard": "modules/demo/dashboard",

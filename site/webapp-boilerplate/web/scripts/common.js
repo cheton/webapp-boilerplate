@@ -31,6 +31,9 @@
             // Backbone
             "libs.backbone": "../libraries/backbone/0.9.2/backbone",
 
+            // Bootstrap
+            "libs.bootstrap": "../libraries/bootstrap/2.2.2/js/bootstrap",
+
             // jQuery
             "libs.jquery": "../libraries/jquery/1.8.3/jquery-1.8.3",
 

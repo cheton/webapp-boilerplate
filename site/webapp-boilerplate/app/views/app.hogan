@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html dir="{{dir}}" lang="{{lang}}" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html dir="{{dir}}" lang="{{lang}}" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html dir="{{dir}}" lang="{{lang}}" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html dir="{{dir}}" lang="{{lang}}" class="no-js"> <!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title></title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width">
+<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+<link rel="stylesheet" href="libraries/normalize/2.0.1/normalize.css">
+<link rel="stylesheet" href="libraries/h5bp/4.0.2/css/main.css">
+<link rel="stylesheet" href="libraries/bootstrap/2.2.2/css/bootstrap.css">
+<link rel="stylesheet" href="libraries/font-awesome/3.0/css/font-awesome.css">
+<link rel="stylesheet" href="styles/app.css">
+<script src="libraries/modernizr/2.6.2/modernizr-2.6.2.js"></script>
+</head>
+<body data-route="app" class="{{dir}}">
+<div class="navbar">
+    <div class="navbar-inner">
+        <ul class="nav pull-right">
+            <li class="dropdown">
+                <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="icon-user"></i>
+                    <span>Administrator</span>
+                    <i class="icon-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a tabindex="-1" href="#">My Account</a></li>
+                    <li class="divider"></li>
+                    <li><a tabindex="-1" href="#">Settings</a></li>
+                    <li class="divider"></li>
+                    <li><a tabindex="-1" href="#">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+        <a class="brand" href="#">WebApp Boilerplate</a>
+    </div>
+</div>
+
+<div id="main-menu">
+    <ul class="nav nav-tabs">
+        <li class=""><a data-view="dashboard" href="#/dashboard"><i class="icon-dashboard"></i><span class="title">Dashboard</span></a></li>
+        <li class=""><a data-view="reports" href="#/reports"><i class="icon-bar-chart"></i><span class="title">Reports</span></a></li>
+        <li class=""><a data-view="components" href="#/components"><i class="icon-cogs"></i><span class="title">Components</span></a></li>
+        <li class="dropdown">
+            <a href="#" data-view="dropdown" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i><span class="title">More Pages</span><b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li class=""><a data-view="sign-in" href="#/sign-in"><span>Sign-in Page</span></a></li>
+                <li class=""><a data-view="sign-up" href="#/sign-up"><span>Sign-up Page</span></a></li>
+                <li class=""><a data-view="reset-password" href="#/reset-password"><span>Forgot Password Page</span></a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div id="sidebar-nav">
+    <ul class="nav nav-list">
+        <li class=""><a data-view="dashboard" href="#/dashboard"><i class="icon-home"></i><span class="title">Dashboard</span></a></li>
+        <li class=""><a data-view="reports" href="#/reports"><i class="icon-bar-chart"></i><span class="title">Reports</span></a></li>
+        <li class=""><a data-view="components" href="#/components"><i class="icon-briefcase"></i><span class="title">Components</span></a></li>
+        <li class=""><a data-view="media" href="#/media"><i class="icon-film"></i><span class="title">Media</span></a></li>
+        <li class=""><a data-view="blog" href="#/blog"><i class="icon-beaker"></i><span class="title">Blog</span></a></li>
+        <li class=""><a data-view="help" href="#/help"><i class="icon-question-sign"></i><span class="title">Help</span></a></li>
+        <li class=""><a data-view="faq" href="#/faq"><i class="icon-book"></i><span class="title">Faq</span class="title"></a></li>
+        <li class=""><a data-view="calendar" href="#/calendar"><i class="icon-calendar"></i><span class="title">Calendar</span></a></li>
+        <li class=""><a data-view="forms" href="#/forms"><i class="icon-tasks"></i><span class="title">Forms</span></a></li>
+        <li class=""><a data-view="tables" href="#/tables"><i class="icon-table"></i><span class="title">Tables</span></a></li>
+    </ul>
+</div>
+
+<div class="content">
+</div>
+<script data-version="{{version}}" src="scripts/plugins.js"></script>
+<script data-main="scripts/main" src="libraries/requirejs/require.js"></script>
+</body>
+</html>
