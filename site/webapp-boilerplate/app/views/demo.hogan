@@ -71,7 +71,7 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" data-version="{{version}}" src="scripts/plugins.js"></script>
-<script type="text/javascript" data-main="scripts/main" src="libraries/requirejs/require.js"></script>
+<script data-version="{{version}}" src="scripts/plugins.js"></script>
+<script data-main="scripts/main" src="libraries/requirejs/require.js"></script>
 </body>
 </html>
