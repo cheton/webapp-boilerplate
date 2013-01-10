@@ -8,6 +8,7 @@ require("libs.bootstrap");
 
 var log = require("lib/log");
 var $ = require("libs.jquery");
+var Backbone = require("libs.backbone");
 var router = require("libs.director");
 var app_config = require("modules/app/config");
 

@@ -85,11 +85,11 @@ function WebService(options) {
                 def.resolveWith(null, [data]);
             }).fail(function(ajax) {
                 def.rejectWith(ajax, [get_error(ajax)]);
-            })
+            });
             return def;
         } else {
             // Synchronous, return answer directly
-            o = $.ajax(options)
+            var o = $.ajax(options);
             var ret = options.converters["text json"](o.responseText);
             if (o.status === 200) {
                 _self._lastError = undefined;
