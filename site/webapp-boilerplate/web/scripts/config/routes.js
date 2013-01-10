@@ -26,6 +26,7 @@ module.exports = routes = {
      *
      */
     "*": [
+        "modules/common/api",
         "modules/common/i18n",
         "modules/common/socket.io"
     ],

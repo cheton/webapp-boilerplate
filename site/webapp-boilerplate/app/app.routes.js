@@ -6,8 +6,9 @@ module.exports = function(app) {
     { // API
         var api = require('./routes/api');
 
+        app.get(settings.route + 'api/', api.status);
         app.get(settings.route + 'api/locale/:__lng__', api.changeUserLanguage);
-        app.all(settings.route + 'api/*', api.all);
+        //app.all(settings.route + 'api/*', api.all);
     }
 
     { // General

@@ -24,3 +24,7 @@ module.exports.changeUserLanguage = function(req, res) {
         res.send(403);
     }
 };
+
+module.exports.status = function(req, res) {
+    res.send({status: "ok"});
+};
