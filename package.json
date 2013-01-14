@@ -31,7 +31,8 @@
         "grunt-contrib-copy": "0.3.x",
         "requirejs": "2.1.x",
         "grunt-requirejs": "0.3.x",
-        "grunt-shell": "0.1.x"
+        "grunt-shell": "0.1.x",
+        "supertest": "0.5.x"
     },
     "scripts": {
         "build": "grunt",
