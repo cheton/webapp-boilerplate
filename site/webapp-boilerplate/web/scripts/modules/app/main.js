@@ -10,7 +10,6 @@ var log = require("lib/log");
 var $ = require("libs.jquery");
 var Backbone = require("libs.backbone");
 var router = require("libs.director");
-var app_config = require("modules/app/config");
 
 var modules = {
     dashboard: require("modules/app/dashboard/main")
@@ -46,15 +45,6 @@ var AppModel = Backbone.Model.extend({
         }
     },
     initialize: function() {
-        this.on("change:view", function(model) {
-            var previousView = this.previous("view");
-            var activeView = model.get("view");
-
-            $(".nav li a[data-view='" + previousView + "']").parent("li").removeClass("active");
-            $(".nav li a[data-view='" + activeView + "']").parent("li").addClass("active");
-
-            log.debug("Changed view from " + previousView + " to " + activeView);
-        });
     }
 });
 
@@ -66,45 +56,47 @@ var AppView = Backbone.View.extend({
         "click .nav li:not(.dropdown)": "changeView"
     },
     initialize: function() {
-        this.model = new AppModel();
-    },
-    render: function(app) {
         var _self = this;
-        var activeView = location.hash;
 
-        if ( ! activeView) {
-            var defaultView = "#/dashboard";
-            location.hash = activeView = defaultView;
+        if ( ! location.hash || location.hash.indexOf("#/") !== 0) {
+            location.hash = "#/dashboard";
         }
-
-        $("body").i18n();
 
         // Client-side routing (aka hash-routing)
         router(routes).init();
 
-        $(".nav li").each(function() {
-            var $anchor = $(this).find('a');
-            var view = $anchor.data("view");
-            if ( ! view) {
-                return;
-            }
-            log.info($anchor.attr("href"), activeView);
-            if ($anchor.attr("href") === activeView) {
-                _self.model.set({view: view});
-            }
+        this.$el.i18n();
+
+        this.model = new AppModel();
+        this.model.on("change:view", function(model) {
+            var previousView = this.previous("view");
+            var activeView = model.get("view");
+
+            _self.$(".nav li a[data-view='" + previousView + "']").parent("li").removeClass("active");
+            _self.$(".nav li a[data-view='" + activeView + "']").parent("li").addClass("active");
+
+            log.debug("Changed view from " + previousView + " to " + activeView);
         });
     },
-
+    render: function(app) {
+        var view = location.hash.substring(2); // e.g. location.hash="#/dashboard", view="dashboard"
+        this.navigate(view);
+    },
     changeView: function(e) {
         var $target = $(e.currentTarget);
         var view = $target.find("a").data("view");
 
+        this.navigate(view);
+    },
+    navigate: function(view) {
+        if (typeof view === 'undefined') {
+            return this.model.get("view");
+        }
         this.model.set({view: view});
     }
-
 });
 
-var _self;
+var appView;
 
 /**
  * Module Exports
@@ -114,25 +106,28 @@ module.exports = {
     deps: {
         "modules/app/dashboard": modules.dashboard
     },
-
     init: function(app) {
 
-        app.api.get()
-        .done(function(data) {
-            log.info(data);
-        })
-        .fail(function(err) {
-            log.error(err);
-        });
-
-        var appView = new AppView({
+        appView = new AppView({
             /**
              * The "el" property references the DOM object created in the browser.
              */
             el: "body"
         });
-
         appView.render(app);
+
+        // Make API call
+        app.api.get()
+            .done(function(data) {
+                log.info(data);
+            })
+            .fail(function(err) {
+                log.error(err);
+            });
+
+    },
+    view: function() {
+        return appView;
     }
 
 };
