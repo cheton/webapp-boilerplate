@@ -141,7 +141,12 @@ module.exports = function(grunt) {
                         {
                             name: 'main',
                             include: [ // refer to main.js
-                                'app'
+                                'app',
+                                "modules/common/api",
+                                "modules/common/rbac",
+                                "modules/common/i18n",
+                                "modules/common/socket.io",
+                                'modules/app/main'
                             ]
                         }
                     ],
