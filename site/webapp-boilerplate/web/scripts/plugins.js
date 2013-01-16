@@ -1,5 +1,12 @@
 var root = this.parent || this;
 
+// Define global variables
+root.app = root.app || {};
+root.app.config = root.app.config || {};
+root.app.window = this;
+
+window.root = root;
+
 // RequireJS Config Object
 // define the config object as the global variable 'require' before require.js is loaded, and have the value applied automatically.
 var require;
