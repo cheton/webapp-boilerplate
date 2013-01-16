@@ -13,6 +13,7 @@ The WebApp Boilerplate is a frontend/backend JavaScript stack which is comprised
 *   [i18next](http://i18next.com/) is a full-featured i18n javascript library for translating your webapplication.
 *   Logging with [Winston](https://github.com/flatiron/winston).
 *   URL routing with [Director](https://github.com/flatiron/director).
+*   Role-based access control (RBAC)
 *   Provides launching of multiple Node.js processes and sharing ports.
 *   Provides combo handler service using combohandler middleware. You can use it with any other JavaScript or CSS to construct the combo URLs.
 *   Serves multiple express apps using multihost middleware.
