@@ -17,10 +17,13 @@
             "libs.modernizr": "../libraries/modernizr/2.6.2/modernizr-2.6.2",
 
             // Socket.IO
-            "libs.socket.io": "/socket.io/socket.io",
+            "libs.socket.io": "../libraries/socket.io/0.9.11/socket.io",
 
             // Director
             "libs.director": "../libraries/director/1.1.6/director-1.1.6",
+
+            // RBAC
+            "libs.rbac": "../libraries/rbac/0.1.0/rbac",
 
             // i18next
             "libs.i18next": "../libraries/i18next/1.5.8/i18next-1.5.8",
@@ -66,6 +69,11 @@
             // Modernizr
             "libs.modernizr": {
                 exports: "Modernizr"
+            },
+
+            "libs.rbac": {
+                deps: ["libs.jquery"],
+                exports: "rbac"
             },
 
             // i18next
