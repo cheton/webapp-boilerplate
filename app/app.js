@@ -86,12 +86,13 @@ module.exports = function() {
             if (require.cache[server_path]) {
                 delete require.cache[server_path];
             }
-            var server = require(server_path);
-            if ( ! server) {
-                log.error('The multi-host server does not exist: %s', server_path);
+
+            if ( ! fs.existsSync(path.resolve(server_path) + '.js')) {
+                log.error('The multi-host server does not exist: %j', options);
                 return;
             }
 
+            var server = require(server_path);
             app.use(middleware.multihost({
                 hosts: options.hosts,
                 route: options.route,
