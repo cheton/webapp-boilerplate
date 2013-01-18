@@ -1,4 +1,4 @@
-// rbac, v0.1.0
+// rbac, v0.1.2
 // Copyright (c)2013 Cheton Wu (cheton).
 // Distributed under MIT license
 (function () {
@@ -21,6 +21,17 @@
         role: false,
         rules: {}
     };
+
+    function unique(arr) {
+        var hash = {}, result = [];
+        for (var i = 0, l = arr.length; i < l; ++i) {
+            if ( ! hash.hasOwnProperty(arr[i]) ) {
+                hash[ arr[i] ] = true;
+                result.push(arr[i]);
+            }
+        }
+        return result;
+    }
 
     function array_intersect(arr1) {
         // http://kevin.vanzonneveld.net
@@ -81,7 +92,7 @@
             rules[role].inherits = rules[role].inherits || [];
             for (var i = 0; i < rules[role].inherits.length; ++i) {
                 var inheritedRole = rules[role].inherits[i];
-                permissions = permissions.concat(inheritedRolePermissions(inheritedRole, rules));
+                permissions = unique(permissions.concat(inheritedRolePermissions(inheritedRole, rules)));
             }
             return permissions;
         }
@@ -140,8 +151,19 @@
     function addjQueryPlugin() {
     
         function parse(el) {
-            var roles = el.data('rbac-roles').split(',') || [];
-            var permissions = el.data('rbac-permissions').split(',') || [];
+            var roles = el.data('rbac-roles') || '';
+            var permissions = el.data('rbac-permissions') || '';
+
+            if (roles.length > 0) {
+                roles = roles.split(',');
+            } else {
+                roles = [];
+            }
+            if (permissions.length > 0) {
+                permissions = permissions.split(',');
+            } else {
+                permissions = [];
+            }
 
             if (o.role === false) {
                 el.remove();
@@ -156,7 +178,7 @@
 
             // Check if role exists
             if (roles.length > 0) {
-                if ( ! jQuery.inArray(o.role, roles)) {
+                if (jQuery.inArray(o.role, roles) < 0) {
                     el.remove();
                     return;
                 }
@@ -164,8 +186,14 @@
 
             // Find intersection of two arrays and check permissions
             if (permissions.length > 0) {
-                var result = array_intersect(o.rules[o.role].permissions || [], permissions);
-                if (result.length === 0) {
+                var obj = array_intersect(o.rules[o.role].permissions || [], permissions);
+                var size = 0, key;
+                for (key in obj) {
+                    if (obj.hasOwnProperty(key)) {
+                        ++size;
+                    }
+                }
+                if (size === 0) {
                     el.remove();
                     return;
                 }
