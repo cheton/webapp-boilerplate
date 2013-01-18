@@ -23,7 +23,7 @@
             "libs.director": "../libraries/director/1.1.6/director-1.1.6",
 
             // RBAC
-            "libs.rbac": "../libraries/rbac/0.1.0/rbac",
+            "libs.rbac": "../libraries/rbac/0.1.2/rbac",
 
             // i18next
             "libs.i18next": "../libraries/i18next/1.5.8/i18next-1.5.8",
