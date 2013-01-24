@@ -45,7 +45,9 @@ The WebApp Boilerplate is a frontend/backend JavaScript stack which is comprised
 
     It will drop modules in {prefix}/lib/node_modules, and puts executables files in {prefix}/bin, where {prefix} is usually something like /usr or /usr/local.
 
-        $ npm install -g grunt
+        $ npm install -g grunt@0.4.x
+        $ npm install -g grunt-cli
+        $ npm install -g grunt-init
         $ npm install -g phantomjs
         $ npm install -g supervisor     # Use for development
         $ npm install -g forever        # Use for production
