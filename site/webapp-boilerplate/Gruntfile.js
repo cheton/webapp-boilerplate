@@ -94,10 +94,6 @@ module.exports = function(grunt) {
                         dest: 'build/<%= pkg.name %>/'
                     },
                     {
-                        src: '.htaccess',
-                        dest: 'build/<%= pkg.name %>/'
-                    },
-                    {
                         expand: true,
                         cwd: 'app',
                         src: '**',
