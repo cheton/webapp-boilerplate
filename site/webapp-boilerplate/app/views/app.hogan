@@ -9,9 +9,9 @@
 <title></title>
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width">
-<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-<link rel="stylesheet" href="libraries/normalize/2.0.1/normalize.css">
-<link rel="stylesheet" href="libraries/h5bp/4.0.2/css/main.css">
+<link rel="stylesheet" href="libraries/html5-boilerplate/4.1.0/normalize.css">
+<link rel="stylesheet" href="libraries/html5-boilerplate/4.1.0/main.css">
+<link rel="stylesheet" href="libraries/jquery-ui-themes/1.9.2/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" href="libraries/bootstrap/2.2.2/css/bootstrap.css">
 <link rel="stylesheet" href="libraries/font-awesome/3.0/css/font-awesome.css">
 <link rel="stylesheet" href="styles/app.css">
@@ -70,7 +70,6 @@
         <li class=""><a data-view="tables" href="#/tables"><i class="icon-table"></i><span class="title">Tables</span></a></li>
     </ul>
 </div>
-
 <div class="content">
 </div>
 <script data-version="{{version}}" src="scripts/plugins.js"></script>
