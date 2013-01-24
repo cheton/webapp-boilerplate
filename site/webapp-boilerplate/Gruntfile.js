@@ -3,16 +3,9 @@ module.exports = function(grunt) {
 
     // Project configuration.
     grunt.initConfig({
-        pkg: '<json:package.json>',
+        pkg: grunt.file.readJSON('package.json'),
         meta: {
             banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */'
-        },
-        test: {
-            files: ['app/test/**/*.js']
-        },
-        // Checks your JavaScript against JSHint
-        lint: {
-            files: ['grunt.js', 'app/**/*.js', 'web/scripts/**/*.js']
         },
         jshint: {
             options: {
@@ -27,97 +20,112 @@ module.exports = function(grunt) {
                 undef: true,
                 boss: true,
                 eqnull: true,
-                browser: true
+                browser: true,
+                globals: {
+                    __dirname: true,
+                    process: true,
+                    exports: true,
+                    module: true,
+                    console: true,
+                    define: true,
+                    require: true,
+                    requirejs: true
+                }
             },
-            globals: {
-                __dirname: true,
-                process: true,
-                exports: true,
-                module: true,
-                console: true,
-                define: true,
-                require: true,
-                requirejs: true
-            }
+            all: [
+                'Gruntfile.js',
+                'app/**/*.js',
+                'web/scripts/**/*.js'
+            ]
         },
-        // Runs your QUnit tests
+        nodeunit: {
+            all: [
+                'app/test/**/*.js'
+            ]
+        },
         qunit: {
-            files: ['web/tests/**/*.html']
+            files: [
+                'web/tests/**/*.html'
+            ]
         },
-        // Concatenates your project files together and puts the new file in a dist folder
-        //concat: {
-        //    dist: {
-        //        src: ['<banner:meta.banner>'].concat('web/scripts/**/*.js'),
-        //        dest: 'dist/<%= pkg.name %>-<%= pkg.version %>-all.js'
-        //    }
-        //},
-        // Minifies the file concat put out
-        //min: {
-        //    dist: {
-        //        src: 'dist/<%= pkg.name %>-<%= pkg.version %>-all.js',
-        //        dest: 'dist/<%= pkg.name %>-<%= pkg.version %>-min.js'
-        //    }
-        //},
-        watch: {
-            files: '<config:lint.files>',
-            tasks: 'default'
+        compass: {
+            prod: {
+                options: {
+                    environment: 'production',
+                    cssDir: 'build/<%= pkg.name %>/web/styles',
+                    imagesDir: 'build/<%= pkg.name %>/web/images',
+                    javascriptsDir: 'build/<%= pkg.name %>/web/scripts',
+                    sassDir: 'build/<%= pkg.name %>/web/sass',
+                    outputStyle: 'compressed',
+                    relativeAssets: true,
+                    noLineComments: true,
+                    trace: true
+                }
+            },
+            dev: {
+                options: {
+                    environment: 'development',
+                    cssDir: 'web/styles',
+                    imagesDir: 'web/images',
+                    javascriptsDir: 'web/scripts',
+                    sassDir: 'web/sass',
+                    outputStyle: 'expanded',
+                    relativeAssets: true,
+                    noLineComments: true,
+                    trace: true
+                }
+            }
         },
         clean: {
             prod: [
-                'build/.tmp',
-                'build/*'
+                'build'
             ]
         },
         copy: {
-            pkg: {
-                files: {
-                    'build/<%= pkg.name%>/': 'package.json' // variables in destination
-                }
-            },
-            app: {
-                files: {
-                    'build/<%= pkg.name%>/app/': 'app/**' // variables in destination
-                }
-            },
-            web: {
+            prod: {
                 options: {
-                    basePath: 'build/.tmp/',
+                    processContent: false,
+                    processContentExclude: [
+                    ]
                 },
-                files: {
-                    'build/<%= pkg.name%>/': 'web/**' // variables in destination
-                }
+                files: [
+                    {
+                        src: 'package.json',
+                        dest: 'build/<%= pkg.name %>/'
+                    },
+                    {
+                        src: '.htaccess',
+                        dest: 'build/<%= pkg.name %>/'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'app',
+                        src: '**',
+                        dest: 'build/<%= pkg.name %>/app/'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'web',
+                        src: '**',
+                        dest: 'build/<%= pkg.name %>/web/'
+                    }
+                ]
             }
         },
         compress: {
             prod: {
-                files: {
-                    'build/<%= pkg.name%>-<%= pkg.version %>.tgz': 'build/<%= pkg.name%>/**'
-                }
-            }
-        },
-        shell: {
-            _options: {
-                failOnError: true,
-                stdout: true,
-                stderr: true
-            },
-            runDev: {
-                execOptions: {
-                    env: {
-                        'NODE_ENV' : 'development',
-                        'PORT': 8000
-                    }
+                options: {
+                    archive: 'build/<%= pkg.name %>-<%= pkg.version %>.zip',
+                    mode: 'zip'
                 },
-                command: 'cd app; NODE_ENV=development node main.js'
-            },
-            runProd: {
-                execOptions: {
-                    env: {
-                        'NODE_ENV' : 'production',
-                        'PORT': 8000
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'build/<%= pkg.name %>/',
+                        src: '**',
+                        dest: '<%= pkg.name %>-<%= pkg.version %>'
                     }
-                },
-                command: 'cd build/<%= pkg.name%>-<%= pkg.version %>/app; NODE_ENV=production node main.js'
+                ]
             }
         },
         requirejs: {
@@ -160,7 +168,7 @@ module.exports = function(grunt) {
                     //then all the files from the app directory will be copied to the dir:
                     //output area, and baseUrl will assume to be a relative path under
                     //this directory.
-                    appDir: 'web/',
+                    appDir: 'build/<%= pkg.name %>/web/',
 
                     //By default, all modules are located relative to this path. If baseUrl
                     //is not explicitly set, then all modules are loaded relative to
@@ -176,12 +184,12 @@ module.exports = function(grunt) {
                     //in a separate configuration, set this property to the location of that
                     //main JS file. The first requirejs({}), require({}), requirejs.config({}),
                     //or require.config({}) call found in that file will be used.
-                    mainConfigFile: 'web/scripts/common.js',
+                    mainConfigFile: 'build/<%= pkg.name %>/web/scripts/common.js',
 
                     //The directory path to save the output. If not specified, then
                     //the path will default to be a directory called "build" as a sibling
                     //to the build file. All relative paths are relative to the build file.
-                    dir: 'build/.tmp/web/',
+                    dir: 'build/<%= pkg.name %>/web/',
 
                     //As of RequireJS 2.0.2, the dir above will be deleted before the
                     //build starts again. If you have a big build and are not doing
@@ -516,29 +524,25 @@ module.exports = function(grunt) {
     });
 
     // Load NPM tasks
-    grunt.loadNpmTasks('grunt-requirejs');
-    grunt.loadNpmTasks('grunt-contrib-coffee');
+    grunt.loadNpmTasks('grunt-contrib-compass');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-shell');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-nodeunit');
+    grunt.loadNpmTasks('grunt-contrib-qunit');
+    grunt.loadNpmTasks('grunt-contrib-requirejs');
 
     // Load task-related files from the tasks directory, relative to the grunt.js gruntfile.
     grunt.loadTasks('tasks');
 
     // Development tasks
     grunt.registerTask('build:dev', 'Make development build', function() {
-        grunt.task.run('lint test qunit');
-    });
-    grunt.registerTask('run:dev', 'Run a development build', function() {
-        grunt.task.run('shell:runDev');
+        grunt.task.run(['jshint', 'nodeunit', 'qunit', 'compass:dev']);
     });
 
     // Production tasks
     grunt.registerTask('build:prod', 'Make production build', function() {
-        grunt.task.run('clean:prod lint test qunit requirejs:prod copy:pkg copy:app copy:web compress:prod');
-    });
-    grunt.registerTask('run:prod', 'Run a production build', function() {
-        grunt.task.run('shell:runProd');
+        grunt.task.run(['jshint', 'nodeunit', 'qunit', 'clean:prod', 'copy:prod', 'compass:prod', 'requirejs:prod', 'compress:prod']);
     });
 
     // Default tasks
