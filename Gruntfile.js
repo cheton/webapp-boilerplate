@@ -101,12 +101,12 @@ module.exports = function(grunt) {
 
     // Development tasks
     grunt.registerTask('build:dev', 'Make development build', function() {
-        grunt.task.run(['test']);
+        grunt.task.run(['jshint', 'nodeunit']);
     });
 
     // Production tasks
     grunt.registerTask('build:prod', 'Make production build', function() {
-        grunt.task.run(['test', 'clean:prod', 'copy:prod', 'compress:prod']);
+        grunt.task.run(['jshint', 'nodeunit', 'clean:prod', 'copy:prod', 'compress:prod']);
     });
 
     // Default tasks
