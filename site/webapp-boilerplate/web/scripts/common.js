@@ -48,6 +48,10 @@
             "libs.jquery-plugins.dataTables.themes.bootstrap": "../libraries/jquery-plugins/jquery-dataTables/1.9.0/themes/DT_bootstrap",
             "libs.jquery-plugins.jsrender": "../libraries/jquery-plugins/jsrender/1.0pre/jsrender",
 
+            "libs.garlic": "../libraries/galic/1.2.0/garlic",
+            "libs.parsley": "../libraries/parsley/1.1.5/parsley",
+            "libs.select2": "../libraries/select2/3.2/select2",
+
             // RequireJS Plugins
             "text": "../libraries/requirejs-plugins/text/2.0.3/text",
             "domReady": "../libraries/requirejs-plugins/domReady/2.0.1/domReady",
@@ -113,6 +117,21 @@
                 deps: ["libs.jquery-plugins.dataTables"]
             },
             "libs.jquery-plugins.jsrender": {
+                deps: ["libs.jquery"]
+            },
+
+            // Garlic.js
+            "libs.garlic": {
+                deps: ["libs.jquery"]
+            },
+
+            // Parsley.js
+            "libs.parsley": {
+                deps: ["libs.jquery"]
+            },
+
+            // Select2
+            "libs.select2": {
                 deps: ["libs.jquery"]
             }
         },
