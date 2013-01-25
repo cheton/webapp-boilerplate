@@ -35,7 +35,6 @@
     "supertest": "0.5.x"
   },
   "scripts": {
-    "build": "grunt",
     "test": "grunt test"
   }
 }
