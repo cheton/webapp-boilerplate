@@ -96,14 +96,17 @@ module.exports = function(grunt) {
     // Load task-related files from the tasks directory, relative to the grunt.js gruntfile.
     grunt.loadTasks('tasks');
 
+    // Test tasks
+    grunt.registerTask('test', ['jshint', 'nodeunit']);
+
     // Development tasks
     grunt.registerTask('build:dev', 'Make development build', function() {
-        grunt.task.run(['jshint', 'nodeunit']);
+        grunt.task.run(['test']);
     });
 
     // Production tasks
     grunt.registerTask('build:prod', 'Make production build', function() {
-        grunt.task.run(['jshint', 'nodeunit', 'clean:prod', 'copy:prod', 'compress:prod']);
+        grunt.task.run(['test', 'clean:prod', 'copy:prod', 'compress:prod']);
     });
 
     // Default tasks
