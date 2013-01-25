@@ -1,4 +1,4 @@
-# WebApp Boilerplate [![Build Status](https://secure.travis-ci.org/cheton/webapp-boilerplate.png?branch=master)](http://travis-ci.org/cheton/webapp-boilerplate)
+# WebApp Boilerplate [![Build Status](https://travis-ci.org/cheton/webapp-boilerplate.png)](https://travis-ci.org/cheton/webapp-boilerplate)
 
 The WebApp Boilerplate is a frontend/backend JavaScript stack which is comprised of HTML/JavaScript/CSS tools and frameworks for building web applications. You can initialize and create a new project using the scaffold.
 
