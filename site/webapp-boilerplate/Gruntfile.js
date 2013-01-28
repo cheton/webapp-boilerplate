@@ -52,10 +52,10 @@ module.exports = function(grunt) {
             prod: {
                 options: {
                     environment: 'production',
-                    cssDir: 'build/<%= pkg.name %>/web/styles',
+                    cssDir: 'build/<%= pkg.name %>/web',
                     imagesDir: 'build/<%= pkg.name %>/web/images',
                     javascriptsDir: 'build/<%= pkg.name %>/web/scripts',
-                    sassDir: 'build/<%= pkg.name %>/web/sass',
+                    sassDir: 'build/<%= pkg.name %>/web',
                     outputStyle: 'compressed',
                     relativeAssets: true,
                     noLineComments: true,
@@ -65,10 +65,10 @@ module.exports = function(grunt) {
             dev: {
                 options: {
                     environment: 'development',
-                    cssDir: 'web/styles',
+                    cssDir: 'web',
                     imagesDir: 'web/images',
                     javascriptsDir: 'web/scripts',
-                    sassDir: 'web/sass',
+                    sassDir: 'web',
                     outputStyle: 'expanded',
                     relativeAssets: true,
                     noLineComments: true,
@@ -516,6 +516,30 @@ module.exports = function(grunt) {
                     useSourceUrl: false // true
                 }
             }
+        },
+        watch: {
+            jshint: {
+                files: [
+                    'Gruntfile.js',
+                    'app/**/*.js',
+                    'web/scripts/**/*.js'
+                ],
+                tasks: [
+                    'jshint:all'
+                ],
+                options: {
+                    debounceDelay: 500
+                }
+            },
+            compass: {
+                files: [
+                    'web/**/*.sass',
+                    'web/**/*.scss'
+                ],
+                tasks: [
+                    'compass:dev'
+                ]
+            }
         }
     });
 
@@ -527,6 +551,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-nodeunit');
     grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
     // Load task-related files from the tasks directory, relative to the grunt.js gruntfile.
     grunt.loadTasks('tasks');
