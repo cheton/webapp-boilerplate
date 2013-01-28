@@ -26,6 +26,7 @@ module.exports = routes = {
      *
      */
     "*": [
+        "libs.bootstrap",
         "modules/common/api",
         "modules/common/rbac",
         "modules/common/i18n",
