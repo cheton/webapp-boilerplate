@@ -1,5 +1,7 @@
 # WebApp Boilerplate [![Build Status](https://travis-ci.org/cheton/webapp-boilerplate.png)](https://travis-ci.org/cheton/webapp-boilerplate)
 
+[![NPM](https://nodei.co/npm/webapp-boilerplate.png?downloads=true&stars=true)](https://nodei.co/npm/webapp-boilerplate/)
+
 The WebApp Boilerplate is a frontend/backend JavaScript stack which is comprised of HTML/JavaScript/CSS tools and frameworks for building web applications. You can initialize and create a new project using the scaffold.
 
 ## Features
