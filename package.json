@@ -2,12 +2,19 @@
   "name": "webapp-boilerplate",
   "version": "0.5.3",
   "description": "WebApp Boilerplate",
-  "private": true,
   "author": "Cheton Wu <cheton@gmail.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/cheton/webapp-boilerplate.git"
   },
+  "license": "MIT",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/cheton/webapp-boilerplate/blob/master/LICENSE"
+    }
+  ],
+  "engines": {
   "engines": {
     "node": "0.8.x",
     "npm": "1.1.x"
