@@ -1,3 +1,8 @@
+### A new major release will be available in Q3 2015
+  - Support yeoman generator to generate the whole directory structure
+  - Support both Gulp and Grunt
+  - Move from RequireJS to Browserify
+
 # WebApp Boilerplate [![Build Status](https://travis-ci.org/cheton/webapp-boilerplate.png)](https://travis-ci.org/cheton/webapp-boilerplate)
 
 [![NPM](https://nodei.co/npm/webapp-boilerplate.png?downloads=true&stars=true)](https://nodei.co/npm/webapp-boilerplate/)
