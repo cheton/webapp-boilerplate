@@ -1,7 +1,5 @@
-### A new major release will be available in Q3 2015
-  - Support yeoman generator to generate the whole directory structure
-  - Support both Gulp and Grunt
-  - Move from RequireJS to Browserify
+### DEPRECATED
+Warning: this project has been moved to another location. Please take a look at its new location: https://github.com/cheton/webappengine
 
 # WebApp Boilerplate [![Build Status](https://travis-ci.org/cheton/webapp-boilerplate.png)](https://travis-ci.org/cheton/webapp-boilerplate)
 
